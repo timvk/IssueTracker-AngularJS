@@ -1,0 +1,7 @@
+.main {
+    margin-top: 100px;
+}
+
+.disabled-button {
+    opacity: 0.5;
+}
