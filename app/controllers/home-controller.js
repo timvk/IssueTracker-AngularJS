@@ -1,6 +1,9 @@
 'use strict';
 
-angular.module('IssueTrackerSystem.home', ['IssueTracker.services.authentication'])
+angular.module('issueTrackerSystem.home', [
+    'issueTracker.services.authentication',
+    'issueTrackerSystem.services.identity'
+])
 
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider.when('/', {
@@ -11,13 +14,19 @@ angular.module('IssueTrackerSystem.home', ['IssueTracker.services.authentication
 
     .controller('HomeCtrl', [
         '$scope',
-        'userAuthentication'
-        , function ($scope, userAuthentication) {
-            $scope.login = function (user) {
+        '$location',
+        'userAuthentication',
+        'identity',
+        function HomeCtrl($scope, $location, userAuthentication, identity) {
+            $scope.isAuthenticated = identity.isAuthenticated();
 
+            $scope.login = function (user) {
                 userAuthentication.loginUser(user)
                     .then(function (loggedData) {
-                        console.log(loggedData);
+                        console.log(loggedData.data.access_token);
+                        sessionStorage.accessToken = loggedData.data.access_token;
+                        $location.path('/');
+                        //console.log($scope.isAuthenticated);
                     }, function (error) {
                         console.log(error);
                     })
@@ -29,6 +38,13 @@ angular.module('IssueTrackerSystem.home', ['IssueTracker.services.authentication
                         console.log(registeredData);
                     },function(error) {
                         console.log(error);
+                    })
+            };
+
+            $scope.logout = function () {
+                userAuthentication.logoutUser()
+                    .then(function() {
+
                     })
             };
         }]);

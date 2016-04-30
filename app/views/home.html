@@ -1,87 +1,129 @@
-<div class="col-lg-5 col-lg-offset-1">
-    <div class="well bs-component">
-        <form name="loginForm" class="form-horizontal">
-            <fieldset>
+<div ng-if="!isAuthenticated">
+    <div class="col-lg-5 col-lg-offset-1">
+        <div class="well bs-component">
+            <form name="loginForm" class="form-horizontal">
+                <fieldset>
 
-                <legend>Login</legend>
-                <div class="form-group">
-                    <label for="email-login" class="col-lg-2 control-label">Name</label>
+                    <legend>Login</legend>
+                    <div class="form-group">
+                        <label for="email-login" class="col-lg-2 control-label">Name</label>
 
-                    <div class="col-lg-10">
-                        <input ng-model="loginUser.email" required="required" id="email-login" class="form-control"
-                               type="text">
+                        <div class="col-lg-10">
+                            <input ng-model="loginUser.email" required="required" id="email-login" class="form-control"
+                                   type="text">
+                        </div>
                     </div>
-                </div>
 
-                <div class="form-group">
-                    <label for="password-login" class="col-lg-2 control-label">Password</label>
+                    <div class="form-group">
+                        <label for="password-login" class="col-lg-2 control-label">Password</label>
 
-                    <div class="col-lg-10">
-                        <input ng-model="loginUser.password" required="required" class="form-control"
-                               id="password-login" type="password">
+                        <div class="col-lg-10">
+                            <input ng-model="loginUser.password" required="required" class="form-control"
+                                   id="password-login" type="password">
+                        </div>
                     </div>
-                </div>
 
-                <div class="form-group">
-                    <div class="col-lg-10 col-lg-offset-2">
-                        <button type="reset" class="btn btn-default">Cancel</button>
-                        <button ng-click="login(loginUser)" ng-disabled="loginForm.$invalid" class="btn btn-primary">
-                            Login
-                        </button>
+                    <div class="form-group">
+                        <div class="col-lg-10 col-lg-offset-2">
+                            <button type="reset" class="btn btn-default">Cancel</button>
+                            <button ng-click="login(loginUser)" ng-disabled="loginForm.$invalid"
+                                    class="btn btn-primary">
+                                Login
+                            </button>
+                        </div>
                     </div>
-                </div>
-            </fieldset>
-        </form>
-        <div style="display: none;" class="btn btn-primary btn-xs">&lt; &gt;</div>
+                </fieldset>
+            </form>
+            <div style="display: none;" class="btn btn-primary btn-xs">&lt; &gt;</div>
+        </div>
+    </div>
+
+    <div class="col-lg-5">
+        <div class="well bs-component">
+            <form name="registerForm" class="form-horizontal">
+                <fieldset>
+
+                    <legend>Register</legend>
+
+                    <div class="form-group">
+                        <label for="email" class="col-lg-2 control-label">Email</label>
+
+                        <div class="col-lg-10">
+                            <input ng-model="registerUser.email" required="required" class="form-control" id="email"
+                                   type="email">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password" class="col-lg-2 control-label">Password</label>
+
+                        <div class="col-lg-10">
+                            <input ng-model="registerUser.password" required="required" minlength="6" maxlength="100"
+                                   class="form-control" id="password" type="password">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirmPassword" class="col-lg-2 control-label">Confirm Password</label>
+
+                        <div class="col-lg-10">
+                            <input ng-model="registerUser.confirmPassword" required="required" class="form-control"
+                                   id="confirmPassword"
+                                   type="password">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-lg-10 col-lg-offset-2">
+                            <button type="reset" class="btn btn-default">Cancel</button>
+                            <button ng-class="register-form.$invalid ? 'disabled-button' : ''"
+                                    ng-disabled="registerForm.$invalid || registerUser.password != registerUser.confirmPassword"
+                                    ng-click="register(registerUser)" class="btn btn-primary">Register
+                            </button>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+            <div style="display: none;" id="source-button" class="btn btn-primary btn-xs">&lt; &gt;</div>
+        </div>
     </div>
 </div>
 
-<div class="col-lg-5">
-    <div class="well bs-component">
-        <form name="registerForm" class="form-horizontal">
-            <fieldset>
+<div ng-if="isAuthenticated">
 
-                <legend>Register</legend>
+    <div class="bs-component col-lg-3">
+        <h1>My Projects</h1>
+    </div>
 
-                <div class="form-group">
-                    <label for="email" class="col-lg-2 control-label">Email</label>
-
-                    <div class="col-lg-10">
-                        <input ng-model="registerUser.email" required="required" class="form-control" id="email"
-                               type="email">
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="password" class="col-lg-2 control-label">Password</label>
-
-                    <div class="col-lg-10">
-                        <input ng-model="registerUser.password" required="required" minlength="6" maxlength="100"
-                               class="form-control" id="password" type="password">
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="confirmPassword" class="col-lg-2 control-label">Confirm Password</label>
-
-                    <div class="col-lg-10">
-                        <input ng-model="registerUser.confirmPassword" required="required" class="form-control"
-                               id="confirmPassword"
-                               type="password">
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <div class="col-lg-10 col-lg-offset-2">
-                        <button type="reset" class="btn btn-default">Cancel</button>
-                        <button ng-class="register-form.$invalid ? 'disabled-button' : ''"
-                                ng-disabled="registerForm.$invalid || registerUser.password != registerUser.confirmPassword"
-                                ng-click="register(registerUser)" class="btn btn-primary">Register
-                        </button>
-                    </div>
-                </div>
-            </fieldset>
-        </form>
-        <div style="display: none;" id="source-button" class="btn btn-primary btn-xs">&lt; &gt;</div>
+    <div class="bs-component col-lg-8">
+        <h1>My Issues</h1>
+        <table class="table table-striped table-hover ">
+            <thead>
+            <tr>
+                <th>#</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Project</th>
+                <th>Due Date</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>1</td>
+                <td>Column content</td>
+                <td>Column content</td>
+                <td>Column content</td>
+                <td>Column content</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Column content</td>
+                <td>Column content</td>
+                <td>Column content</td>
+                <td>Column content</td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 </div>
+
