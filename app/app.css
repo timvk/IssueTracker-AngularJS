@@ -14,3 +14,30 @@ body {
     display: none !important;
 }
 
+.pattern-style-a
+{
+    text-align: left;
+    border-collapse: collapse;
+    background: url('images/pattern.png');
+    color: black;
+}
+.pattern-style-a thead tr
+{
+    background: url('images/pattern-head.png');
+}
+.pattern-style-a th
+{=
+    font-weight: normal;
+    padding: 8px;
+    border-bottom: 1px solid #fff;
+}
+.pattern-style-a td
+{
+    padding: 8px;
+    border-bottom: 1px solid #fff;
+    border-top: 1px solid transparent;
+}
+.pattern-style-a tbody tr:hover td
+{
+    background: #fff;
+}

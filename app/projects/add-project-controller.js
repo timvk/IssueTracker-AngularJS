@@ -13,6 +13,4 @@ angular.module('issueTrackerSystem.projects.addProject', [])
                 console.log(project);
             }
         }
-
-
     ]);

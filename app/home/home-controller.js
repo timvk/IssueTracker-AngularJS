@@ -60,7 +60,8 @@ angular.module('issueTrackerSystem.home', [
                 //.log(identity.getCurrentUser());
                 projects.getProjectsByUser(JSON.parse(identity.getCurrentUser()).userId)
                     .then(function(response) {
-                        console.log(response);
+                        console.log(response.data.Projects);
+                        $scope.projects = response.data.Projects;
                     }, function(error) {
 
                     })
