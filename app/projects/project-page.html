@@ -1,0 +1,12 @@
+<div>
+    <!--temporary thingy-->
+    <p>Name: {{project.Name}}</p>
+    <p>Id: {{project.Id}}</p>
+    <p>Description: {{project.Description}}</p>
+    <p>LeaderId: {{project.Lead.Id}}</p>
+    <p>LeaderUsername: {{project.Lead.Username}}</p>
+    <p>ProjectKey: {{project.ProjectKey}}</p>
+    <div ng-if="checkLeader()">
+        <button>Add issue</button>
+    </div>
+</div>

@@ -2,7 +2,7 @@ angular.module('issueTrackerSystem.services.identity', [])
     .factory('identity', [function() {
 
         function getCurrentUser() {
-            return sessionStorage.currentUser;
+            return JSON.parse(sessionStorage.currentUser);
         }
 
         function isAuthenticated() {

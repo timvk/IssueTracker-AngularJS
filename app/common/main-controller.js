@@ -12,7 +12,7 @@ angular.module('issueTrackerSystem.common.main', [
             $scope.isAuthenticated = identity.isAuthenticated();
 
             if($scope.isAuthenticated) {
-                $scope.currentUser = JSON.parse(identity.getCurrentUser());
+                $scope.currentUser = identity.getCurrentUser();
                 $scope.isAdmin = $scope.currentUser.isAdmin;
                 //console.log($scope.isAdmin);
             }

@@ -5,7 +5,8 @@ angular.module('issueTrackerSystem', [
     'issueTrackerSystem.common.requester',
     'issueTrackerSystem.common.main',
     'issueTrackerSystem.home',
-    'issueTrackerSystem.projects.addProject',
+    'issueTrackerSystem.services.identity',
+    'issueTrackerSystem.projects',
     'issueTrackerSystem.services.projects',
     'angular-loading-bar'
 ]).
