@@ -1,23 +1,27 @@
-angular.module('issueTrackerSystem.requester', [])
+angular.module('issueTrackerSystem.common.requester', [])
     .factory('requester', [
         '$http',
         '$q',
         function ($http, $q) {
 
-            function getItem(url) {
-                return makeRequest('GET', url, {headers: { 'Authorization': sessionStorage.accessToken }});
+            function getItem(url, useSession) {
+                var headers = getHeaders.call(this, false, useSession);
+                return makeRequest('GET', url, headers, null);
             }
 
-            function postItem(url, data) {
-                return makeRequest('POST', url, {headers: { 'Authorization': sessionStorage.accessToken }},data);
+            function postItem(url, data, useSession) {
+                var headers = getHeaders.call(this, data, useSession);
+                return makeRequest('POST', url, headers, data);
             }
 
-            function putItem(url, data) {
-                return makeRequest('PUT', url, {headers: { 'Authorization': sessionStorage.accessToken }},data);
+            function putItem(url, data, useSession) {
+                var headers = getHeaders.call(this, data, useSession);
+                return makeRequest('PUT', url, headers, data);
             }
 
-            function deleteItem(url) {
-                return makeRequest('DELETE', url, {headers: { 'Authorization': sessionStorage.accessToken }});
+            function deleteItem(url, useSession) {
+                var headers = getHeaders.call(this, false, useSession);
+                return makeRequest('DELETE', url, headers, null);
             }
 
             function makeRequest(method, url, headers, data) {
@@ -38,6 +42,22 @@ angular.module('issueTrackerSystem.requester', [])
                 ;
 
                 return defer.promise;
+            }
+
+            function getHeaders(isJSON, useSession) {
+                var headers = {},
+                    token;
+
+                if (isJSON) {
+                    headers['Content-Type'] = 'application/json';
+                }
+
+                if (useSession) {
+                    token = sessionStorage.accessToken;
+                    headers['Authorization'] = 'Bearer ' + token;
+                }
+
+                return headers;
             }
 
             return {

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('issueTrackerSystem.home', [
-    'issueTracker.services.authentication',
+    'issueTrackerSystem.services.authentication',
     'issueTrackerSystem.services.identity'
 ])
 
@@ -16,17 +16,24 @@ angular.module('issueTrackerSystem.home', [
         '$scope',
         '$location',
         'userAuthentication',
-        'identity',
-        function HomeCtrl($scope, $location, userAuthentication, identity) {
-            $scope.isAuthenticated = identity.isAuthenticated();
+        function HomeCtrl($scope, $location, userAuthentication) {
 
             $scope.login = function (user) {
                 userAuthentication.loginUser(user)
                     .then(function (loggedData) {
-                        console.log(loggedData.data.access_token);
+
                         sessionStorage.accessToken = loggedData.data.access_token;
                         $location.path('/');
-                        //console.log($scope.isAuthenticated);
+                        userAuthentication.getCurrentUser()
+                            .then(function (response) {
+                                var currentUser = {
+                                    userId: response.data.Id,
+                                    username: response.data.Username,
+                                    isAdmin: response.data.isAdmin
+                                };
+
+                                sessionStorage.currentUser = JSON.stringify(currentUser);
+                            });
                     }, function (error) {
                         console.log(error);
                     })
@@ -34,17 +41,14 @@ angular.module('issueTrackerSystem.home', [
 
             $scope.register = function (user) {
                 userAuthentication.registerUser(user)
-                    .then(function(registeredData) {
+                    .then(function (registeredData) {
                         console.log(registeredData);
-                    },function(error) {
+                    }, function (error) {
                         console.log(error);
                     })
             };
 
             $scope.logout = function () {
-                userAuthentication.logoutUser()
-                    .then(function() {
-
-                    })
+                userAuthentication.logoutUser();
             };
         }]);

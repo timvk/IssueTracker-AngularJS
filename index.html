@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="issueTrackerSystem" class="no-js">
+<html lang="en" ng-app="issueTrackerSystem" ng-cloak class="no-js">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="app/app.css">
     <script src="app/bower_components/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js"></script>
 </head>
-<body>
+<body ng-controller="MainCtrl">
 <div class="main-nav">
     <div class="navbar navbar-default navbar-fixed-top">
         <div class="container">
@@ -24,15 +24,15 @@
                     <span class="icon-bar"></span>
                 </button>
             </div>
-            <div class="navbar-collapse collapse" id="navbar-main">
+            <div ng-if="isAuthenticated" class="navbar-collapse collapse" id="navbar-main">
                 <ul class="nav navbar-nav">
-                    <li >
+                    <li>
                         <a href="#/">Dashboard</a>
                     </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#/">Hello, user</a></li>
-                    <li><a href="#/" target="_blank">Logout</a></li>
+                    <li><a href="#/profile" class="ng-cloak">Hello, {{currentUser.username}}</a></li>
+                    <li><a href="#/logout">Logout</a></li>
                 </ul>
             </div>
         </div>
@@ -61,6 +61,7 @@
 <script src="app/services/authentication.js"></script>
 <script src="app/services/identity.js"></script>
 <script src="app/common/requester.js"></script>
+<script src="app/common/main-controller.js"></script>
 <script src="app/app.js"></script>
 <script src="app/controllers/home-controller.js"></script>
 </body>
