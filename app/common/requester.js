@@ -3,7 +3,6 @@ angular.module('issueTrackerSystem.common.requester', [])
         '$http',
         '$q',
         function ($http, $q) {
-
             function getItem(url, useSession) {
                 var headers = getHeaders.call(this, false, useSession);
                 return makeRequest('GET', url, headers, null);

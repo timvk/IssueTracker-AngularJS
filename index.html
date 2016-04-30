@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="app/bower_components/html5-boilerplate/dist/css/normalize.css">
     <link rel="stylesheet" href="app/bower_components/html5-boilerplate/dist/css/main.css">
     <link rel="stylesheet" href="app/bower_components/bootstrap/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="app/bower_components/angular-loading-bar/build/loading-bar.css"/>
     <link rel="stylesheet" href="app/app.css">
     <script src="app/bower_components/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js"></script>
 </head>
@@ -29,10 +30,16 @@
                     <li>
                         <a href="#/">Dashboard</a>
                     </li>
+                    <li ng-if="isAdmin">
+                        <a href="#/projects">All Projects</a>
+                    </li>
+                    <li ng-if="isAdmin">
+                        <a href="#/projects/add">Add Project</a>
+                    </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="#/profile" class="ng-cloak">Hello, {{currentUser.username}}</a></li>
-                    <li><a href="#/logout">Logout</a></li>
+                    <li><a ng-click="logout()" href="#/logout">Logout</a></li>
                 </ul>
             </div>
         </div>
@@ -58,11 +65,14 @@
 <script src="app/bower_components/angular-route/angular-route.js"></script>
 <script src="app/bower_components/jquery/dist/jquery.js"></script>
 <script src="app/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-<script src="app/services/authentication.js"></script>
-<script src="app/services/identity.js"></script>
+<script src="app/bower_components/angular-loading-bar/build/loading-bar.js"></script>
+<script src="app/users/authentication.js"></script>
+<script src="app/users/identity.js"></script>
 <script src="app/common/requester.js"></script>
 <script src="app/common/main-controller.js"></script>
 <script src="app/app.js"></script>
-<script src="app/controllers/home-controller.js"></script>
+<script src="app/home/home-controller.js"></script>
+<script src="app/projects/add-project-controller.js"></script>
+<script src="app/projects/projects.js"></script>
 </body>
 </html>

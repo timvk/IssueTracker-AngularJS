@@ -1,0 +1,59 @@
+<div class="row">
+    <div class="col-lg-6">
+        <div class="well bs-component">
+            <form name="newProjectForm" class="form-horizontal">
+                <fieldset>
+                    <legend>Add new project</legend>
+                    <div class="form-group">
+                        <label for="name" class="col-lg-3 control-label">Name</label>
+
+                        <div class="col-lg-9">
+                            <input ng-model="project.name" required class="form-control" id="name" type="text">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="description" class="col-lg-3 control-label">Description</label>
+
+                        <div class="col-lg-9">
+                            <textarea ng-model="project.description" required class="form-control" rows="3" id="description"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="project-key" class="col-lg-3 control-label">Project Key</label>
+
+                        <div class="col-lg-9">
+                            <input ng-model="project.key" required class="form-control" id="project-key" type="text">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="lead-id" class="col-lg-3 control-label">LeadId</label>
+
+                        <div class="col-lg-9">
+                            <input ng-model="project.lead" required class="form-control" id="lead-id" type="text">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="labels" class="col-lg-3 control-label">Labels</label>
+
+                        <div class="col-lg-9">
+                            <input ng-model="project.labels" class="form-control" id="labels" type="text">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="priorities" class="col-lg-3 control-label">Priorities</label>
+
+                        <div class="col-lg-9">
+                            <input ng-model="project.priorities" class="form-control" id="priorities" type="text">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-lg-9 col-lg-offset-2">
+                            <button type="reset" class="btn btn-default">Cancel</button>
+                            <button ng-click="seeProject(project)" ng-disabled="newProjectForm.$invalid" type="submit" class="btn btn-primary">Add</button>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>

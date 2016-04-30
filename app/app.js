@@ -2,8 +2,12 @@
 
 angular.module('issueTrackerSystem', [
     'ngRoute',
+    'issueTrackerSystem.common.requester',
     'issueTrackerSystem.common.main',
-    'issueTrackerSystem.home'
+    'issueTrackerSystem.home',
+    'issueTrackerSystem.projects.addProject',
+    'issueTrackerSystem.services.projects',
+    'angular-loading-bar'
 ]).
     config(['$routeProvider', function ($routeProvider) {
         $routeProvider.otherwise({redirectTo: '/'});

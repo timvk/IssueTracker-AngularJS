@@ -4,10 +4,9 @@ angular.module('issueTrackerSystem.home', [
     'issueTrackerSystem.services.authentication',
     'issueTrackerSystem.services.identity'
 ])
-
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider.when('/', {
-            templateUrl: 'app/views/home.html',
+            templateUrl: 'app/home/home.html',
             controller: 'HomeCtrl'
         });
     }])
@@ -16,13 +15,16 @@ angular.module('issueTrackerSystem.home', [
         '$scope',
         '$location',
         'userAuthentication',
-        function HomeCtrl($scope, $location, userAuthentication) {
+        'identity',
+        'projects',
+        function HomeCtrl($scope, $location, userAuthentication, identity, projects) {
+            $scope.isAuthenticated = identity.isAuthenticated();
 
             $scope.login = function (user) {
                 userAuthentication.loginUser(user)
                     .then(function (loggedData) {
-
                         sessionStorage.accessToken = loggedData.data.access_token;
+                        $scope.isAuthenticated = true;
                         $location.path('/');
                         userAuthentication.getCurrentUser()
                             .then(function (response) {
@@ -41,14 +43,27 @@ angular.module('issueTrackerSystem.home', [
 
             $scope.register = function (user) {
                 userAuthentication.registerUser(user)
-                    .then(function (registeredData) {
-                        console.log(registeredData);
+                    .then(function (response) {
+                        console.log(response);
+                        //TODO: test register again
+                        $scope.login(user);
                     }, function (error) {
                         console.log(error);
                     })
             };
 
-            $scope.logout = function () {
-                userAuthentication.logoutUser();
-            };
+            if($scope.isAuthenticated) {
+                getUsersProjects();
+            }
+
+            function getUsersProjects() {
+                //.log(identity.getCurrentUser());
+                projects.getProjectsByUser(JSON.parse(identity.getCurrentUser()).userId)
+                    .then(function(response) {
+                        console.log(response);
+                    }, function(error) {
+
+                    })
+            }
+
         }]);

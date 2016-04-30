@@ -1,12 +1,26 @@
 angular.module('issueTrackerSystem.common.main', [
+    'issueTrackerSystem.services.authentication',
     'issueTrackerSystem.services.identity'
 ])
     .controller('MainCtrl', [
         '$scope',
+        'userAuthentication',
         'identity',
-        function MainCtrl($scope, identity) {
+        '$location',
+        function MainCtrl($scope, userAuthentication, identity, $location) {
 
             $scope.isAuthenticated = identity.isAuthenticated();
-            $scope.currentUser = JSON.parse(identity.getCurrentUser());
 
+            if($scope.isAuthenticated) {
+                $scope.currentUser = JSON.parse(identity.getCurrentUser());
+                $scope.isAdmin = $scope.currentUser.isAdmin;
+                //console.log($scope.isAdmin);
+            }
+
+            //TODO: create actual route #/logout
+            $scope.logout = function () {
+                userAuthentication.logoutUser();
+                $scope.isAuthenticated = false;
+                $location.path('/');
+            };
     }]);

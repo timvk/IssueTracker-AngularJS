@@ -2,6 +2,10 @@
     margin-top: 100px;
 }
 
+body {
+    font-size: 14px;
+}
+
 .disabled-button {
     opacity: 0.5;
 }
