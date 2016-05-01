@@ -16,8 +16,13 @@ angular.module('issueTrackerSystem.services.projects', [
                 return requester.get(BASE_URL + 'projects/' + projectId, true);
             }
 
+            function getAllProjects() {
+                return requester.get(BASE_URL + 'projects?filter=&pageSize=4&pageNumber=1', true);
+            }
+
             return {
                 getProjectsByUser: getProjectsByUser,
-                getProjectById: getProjectById
+                getProjectById: getProjectById,
+                getAllProjects: getAllProjects
             }
         }]);

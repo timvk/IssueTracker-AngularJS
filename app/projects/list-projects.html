@@ -1,0 +1,19 @@
+<div class="bs-component col-lg-8">
+    <h1>Projects</h1>
+    <table class="pattern-style-a col-lg-12">
+        <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Description</th>
+            <th scope="col">Lead</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="project in projects">
+            <td><a href="#/projects/{{project.Id}}">{{project.Name}}</a></td>
+            <td>{{project.Description}}</td>
+            <td>{{project.Lead.Username}}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>

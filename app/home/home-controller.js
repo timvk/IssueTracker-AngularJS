@@ -53,7 +53,7 @@ angular.module('issueTrackerSystem.home', [
                     })
             };
 
-            if($scope.isAuthenticated) {
+            if ($scope.isAuthenticated) {
                 getUsersProjects();
                 getUsersIssues();
             }
@@ -61,22 +61,21 @@ angular.module('issueTrackerSystem.home', [
             function getUsersProjects() {
                 //.log(identity.getCurrentUser());
                 projects.getProjectsByUser(identity.getCurrentUser().userId)
-                    .then(function(response) {
+                    .then(function (response) {
                         //console.log(response.data.Projects);
                         $scope.projects = response.data.Projects;
-                    }, function(error) {
+                    }, function (error) {
 
                     })
             }
 
             function getUsersIssues() {
                 issues.getIssuesByUser()
-                    .then(function(response) {
+                    .then(function (response) {
                         console.log(response.data.Issues);
                         $scope.issues = response.data.Issues;
-                    }, function(error) {
+                    }, function (error) {
 
                     })
             }
-
         }]);

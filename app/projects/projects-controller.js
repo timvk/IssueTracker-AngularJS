@@ -8,6 +8,10 @@ angular.module('issueTrackerSystem.projects', [])
             .when('/projects/:projectId', {
                 templateUrl: 'app/projects/project-page.html',
                 controller: 'ProjectPageCtrl'
+            })
+            .when('/projects/', {
+                templateUrl: 'app/projects/list-projects.html',
+                controller: 'AllProjectsCtrl'
             });
     }])
 
@@ -39,5 +43,19 @@ angular.module('issueTrackerSystem.projects', [])
             function checkLeader() {
                 return $scope.project.Lead.Id == identity.getCurrentUser().userId;
             }
+        }
+    ])
+    .controller('AllProjectsCtrl', [
+        '$scope',
+        'projects',
+        function AllProjectsCtrl($scope, projects) {
+
+            $scope.listAllProjects = projects.getAllProjects()
+                .then(function(response) {
+                    $scope.projects = response.data.Projects;
+                    console.log(response.data);
+                }, function(error) {
+                    console.log(error);
+                })
         }
     ]);

@@ -2,7 +2,7 @@
     margin-top: 100px;
     margin-bottom: 50px;
     background: white;
-    padding: 30px;
+    padding: 50px 30px;
     border-radius: 7%;
     height: 600px;
 }
@@ -10,6 +10,10 @@
 body {
     font-size: 14px;
     background: url("images/swirl_pattern.png");
+}
+
+.well {
+    background: url("images/pattern.png");
 }
 
 .disabled-button {
