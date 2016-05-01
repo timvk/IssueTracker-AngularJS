@@ -11,8 +11,13 @@ angular.module('issueTrackerSystem.services.issues', [
                 return requester.get(BASE_URL + 'issues/me?orderBy=DueDate desc, IssueKey&pageSize=5&pageNumber=1', true);
             }
 
+            function getIssueById(issueId){
+                return requester.get(BASE_URL + 'issues/' + issueId, true);
+            }
+
             return {
-                getIssuesByUser: getIssuesByUser
+                getIssuesByUser: getIssuesByUser,
+                getIssueById: getIssueById
             }
         }
     ]);
