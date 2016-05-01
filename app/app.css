@@ -1,10 +1,15 @@
 .main {
     margin-top: 100px;
     margin-bottom: 50px;
+    background: white;
+    padding: 30px;
+    border-radius: 7%;
+    height: 600px;
 }
 
 body {
     font-size: 14px;
+    background: url("images/swirl_pattern.png");
 }
 
 .disabled-button {
@@ -27,7 +32,7 @@ body {
     background: url('images/pattern-head.png');
 }
 .pattern-style-a th
-{=
+{
     font-weight: normal;
     padding: 8px;
     border-bottom: 1px solid #fff;
@@ -41,4 +46,15 @@ body {
 .pattern-style-a tbody tr:hover td
 {
     background: #fff;
+}
+
+.display-table tr td{
+    padding: 10px;
+    font-size: 16px;
+}
+
+.display-table tr td:nth-child(1){
+    text-align: right;
+    font-weight: bold;
+    border-right: 5px double #2b81af;
 }

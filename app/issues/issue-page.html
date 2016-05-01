@@ -1,29 +1,41 @@
-<!--<div>-->
-<!--&lt;!&ndash;temporary thingy&ndash;&gt;-->
-<!--<p>Name: {{issue.Name}}</p>-->
-<!--<p>Id: {{issue.Id}}</p>-->
-<!--<p>Description: {{issue.Description}}</p>-->
-<!--<p>LeaderId: {{issue.Lead.Id}}</p>-->
-<!--<p>LeaderUsername: {{project.Lead.Username}}</p>-->
-<!--<p>ProjectKey: {{project.ProjectKey}}</p>-->
-<!--<div ng-if="checkLeader()">-->
-<!--<button>Add issue</button>-->
-<!--</div>-->
-<!--</div>-->
-
 <div>
-    <table>
-        <thead>
+    <h4>{{issue.IssueKey}}</h4>
+    <table class="display-table col-lg-6">
         <tr>
-            <th>Title</th>
-            <th>Description</th>
-            <th>Assignee</th>
-            <th>Author</th>
-            <th>Due Date</th>
-            <th>Due Date</th>
-            <th>Due Date</th>
-            <th>Due Date</th>
+            <td>Title</td>
+            <td>{{issue.Title}}</td>
         </tr>
-        </thead>
+        <tr>
+            <td>Description</td>
+            <td>{{issue.Description}}</td>
+        </tr>
+        <tr>
+            <td>Assignee</td>
+            <td>{{issue.Assignee.Username}}</td>
+        </tr>
+        <tr>
+            <td>Author</td>
+            <td>{{issue.Author.Username}}</td>
+        </tr>
+        <tr>
+            <td>Due Date</td>
+            <td>{{issue.DueDate}}</td>
+        </tr>
+        <tr>
+            <td>Project</td>
+            <td>{{issue.Project.Name}}</td>
+        </tr>
+        <tr>
+            <td>Status</td>
+            <td>{{issue.Status.Name}}</td>
+        </tr>
+        <tr>
+            <td>Prioritiy</td>
+            <td>{{issue.Priority.Name}}</td>
+        </tr>
+        <tr>
+            <td>Labels</td>
+            <td><span  ng-repeat="label in issue.Labels">{{label.Name}} </span></td>
+        </tr>
     </table>
 </div>
