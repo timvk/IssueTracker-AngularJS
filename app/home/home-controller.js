@@ -17,7 +17,8 @@ angular.module('issueTrackerSystem.home', [
         'userAuthentication',
         'identity',
         'projects',
-        function HomeCtrl($scope, $location, userAuthentication, identity, projects) {
+        'issues',
+        function HomeCtrl($scope, $location, userAuthentication, identity, projects, issues) {
             $scope.isAuthenticated = identity.isAuthenticated();
 
             $scope.login = function (user) {
@@ -54,14 +55,25 @@ angular.module('issueTrackerSystem.home', [
 
             if($scope.isAuthenticated) {
                 getUsersProjects();
+                getUsersIssues();
             }
 
             function getUsersProjects() {
                 //.log(identity.getCurrentUser());
                 projects.getProjectsByUser(identity.getCurrentUser().userId)
                     .then(function(response) {
-                        console.log(response.data.Projects);
+                        //console.log(response.data.Projects);
                         $scope.projects = response.data.Projects;
+                    }, function(error) {
+
+                    })
+            }
+
+            function getUsersIssues() {
+                issues.getIssuesByUser()
+                    .then(function(response) {
+                        console.log(response.data.Issues);
+                        $scope.issues = response.data.Issues;
                     }, function(error) {
 
                     })

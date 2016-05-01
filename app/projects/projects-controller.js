@@ -31,7 +31,7 @@ angular.module('issueTrackerSystem.projects', [])
                 .then(function (response) {
                     $scope.project = response.data;
                     $scope.checkLeader = checkLeader;
-                    console.log(response.data);
+                    //console.log(response.data);
                 }, function (error) {
                     console.log(error)
                 });

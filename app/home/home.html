@@ -115,20 +115,16 @@
                 <th scope="col">Description</th>
                 <th scope="col">Project</th>
                 <th scope="col">Due Date</th>
+                <th scope="col">Assignee</th>
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <td>-</td>
-                <td>-</td>
-                <td>-</td>
-                <td>-</td>
-            </tr>
-            <tr>
-                <td>-</td>
-                <td>-</td>
-                <td>-</td>
-                <td>-</td>
+            <tr ng-repeat="issue in issues">
+                <td><a href="#">{{issue.Title}}</a></td>
+                <td>{{issue.Description}}</td>
+                <td>{{issue.Project.Name}}</td>
+                <td>{{issue.DueDate}}</td>
+                <td>{{issue.Author.Username}}</td>
             </tr>
             </tbody>
         </table>
