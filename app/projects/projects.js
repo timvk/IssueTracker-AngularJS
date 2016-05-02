@@ -25,10 +25,27 @@ angular.module('issueTrackerSystem.services.projects', [
                 return requester.post(BASE_URL + 'projects', project, true);
             }
 
+            function getAffiliatedProjects(leadProjects, issueProjects) {
+                function arrayUnique(array) {
+                    var a = array.concat();
+                    for(var i=0; i<a.length; ++i) {
+                        for(var j=i+1; j<a.length; ++j) {
+                            if(a[i].Name === a[j].Name)
+                                a.splice(j--, 1);
+                        }
+                    }
+
+                    return a;
+                }
+
+                return arrayUnique(leadProjects.concat(issueProjects));
+            }
+
             return {
                 getProjectsByLead: getProjectsByLead,
                 getProjectById: getProjectById,
                 getAllProjects: getAllProjects,
-                addProject: addProject
+                addProject: addProject,
+                getAffiliatedProjects: getAffiliatedProjects
             }
         }]);

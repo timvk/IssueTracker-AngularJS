@@ -17,8 +17,7 @@ angular.module('issueTrackerSystem.projects', [])
 
     .controller('AddProjectCtrl', [
         '$scope',
-        'projects',
-        function ($scope, projects) {
+        function ($scope) {
 
             $scope.addProject = function(project){
                 var labels = project.labels.split(', ');

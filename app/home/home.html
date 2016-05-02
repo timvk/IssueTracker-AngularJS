@@ -88,25 +88,23 @@
 </div>
 
 <div ng-if="isAuthenticated">
-    <div class="bs-component col-lg-4">
+    <div class="bs-component col-lg-3">
         <h1>My Projects</h1>
         <table class="pattern-style-a col-lg-12">
             <thead>
             <tr>
                 <th scope="col">Name</th>
-                <th scope="col">Description</th>
             </tr>
             </thead>
             <tbody>
             <tr ng-repeat="project in projects">
                     <td><a href="#/projects/{{project.Id}}">{{project.Name}}</a></td>
-                    <td>{{project.Description}}</td>
             </tr>
             </tbody>
         </table>
     </div>
 
-    <div class="bs-component col-lg-8">
+    <div class="bs-component col-lg-9">
         <h1>My Issues</h1>
         <table class="pattern-style-a col-lg-12">
             <thead>

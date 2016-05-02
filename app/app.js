@@ -5,6 +5,7 @@ angular.module('issueTrackerSystem', [
     'issueTrackerSystem.common.requester',
     'issueTrackerSystem.common.main',
     'issueTrackerSystem.home',
+    'issueTrackerSystem.services.authentication',
     'issueTrackerSystem.services.identity',
     'issueTrackerSystem.projects',
     'issueTrackerSystem.issues',

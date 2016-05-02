@@ -1,8 +1,6 @@
 'use strict';
 
 angular.module('issueTrackerSystem.home', [
-    'issueTrackerSystem.services.authentication',
-    'issueTrackerSystem.services.identity'
 ])
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider.when('/', {
@@ -59,20 +57,33 @@ angular.module('issueTrackerSystem.home', [
             }
 
             function getUsersProjects() {
-                //.log(identity.getCurrentUser());
                 projects.getProjectsByLead(identity.getCurrentUser().userId)
                     .then(function (response) {
-                        //console.log(response.data.Projects);
-                        $scope.projects = response.data.Projects;
-                    }, function (error) {
+                        $scope.projectsLead = response.data.Projects;
+                        //console.log($scope.projectsLead);
+                        issues.getIssuesByUser()
+                            .then(function (response) {
+                                //console.log(response.data.Issues);
+                                $scope.projectIssues = [];
+                                $scope.issues = response.data.Issues;
+                                $scope.issues.forEach(function(i){
+                                    $scope.projectIssues.push(i.Project)
+                                });
+                                //console.log($scope.projectIssues);
 
+                                $scope.projects = projects.getAffiliatedProjects($scope.projectsLead, $scope.projectIssues);
+
+                            }, function (error) {
+                                console.log(error);
+                            })
+                    }, function (error) {
+                        console.log(error);
                     })
             }
 
             function getUsersIssues() {
                 issues.getIssuesByUser()
                     .then(function (response) {
-                        console.log(response.data.Issues);
                         $scope.issues = response.data.Issues;
                     }, function (error) {
 
