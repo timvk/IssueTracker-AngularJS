@@ -4,7 +4,7 @@
     background: white;
     padding: 50px 30px;
     border-radius: 7%;
-    height: 600px;
+    height: 630px;
 }
 
 body {
@@ -22,6 +22,10 @@ body {
 
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
     display: none !important;
+}
+
+.addProject {
+    margin: 0 270px;
 }
 
 .pattern-style-a

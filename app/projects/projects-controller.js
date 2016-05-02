@@ -17,9 +17,20 @@ angular.module('issueTrackerSystem.projects', [])
 
     .controller('AddProjectCtrl', [
         '$scope',
-        function ($scope) {
-            $scope.seeProject = function (project) {
+        'projects',
+        function ($scope, projects) {
+
+            $scope.addProject = function(project){
+                var labels = project.labels.split(', ');
+                var priorities = project.priorities.split(', ');
+
                 console.log(project);
+                //projects.addProject(project)
+                //    .then(function(response) {
+                //        console.log(response);
+                //    }, function(error) {
+                //        console.log(error);
+                //    })
             }
         }
     ])

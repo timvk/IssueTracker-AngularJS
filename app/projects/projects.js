@@ -4,11 +4,12 @@ angular.module('issueTrackerSystem.services.projects', [
     .factory('projects', [
         'requester',
         'BASE_URL',
+        'issues',
         function (requester, BASE_URL) {
 
-            function getProjectsByUser(userId) {
+            function getProjectsByLead(userId) {
                 //TODO: pageSize and pageNumber optional
-                var url = BASE_URL + 'projects?filter=Lead.Id="' + userId + '"&pageSize=4&pageNumber=1';
+                var url = BASE_URL + 'projects?filter=Lead.Id="' + userId + '"&pageSize=8&pageNumber=1';
                 return requester.get(url, true);
             }
 
@@ -17,12 +18,17 @@ angular.module('issueTrackerSystem.services.projects', [
             }
 
             function getAllProjects() {
-                return requester.get(BASE_URL + 'projects?filter=&pageSize=4&pageNumber=1', true);
+                return requester.get(BASE_URL + 'projects?filter=&pageSize=8&pageNumber=1', true);
+            }
+
+            function addProject(project) {
+                return requester.post(BASE_URL + 'projects', project, true);
             }
 
             return {
-                getProjectsByUser: getProjectsByUser,
+                getProjectsByLead: getProjectsByLead,
                 getProjectById: getProjectById,
-                getAllProjects: getAllProjects
+                getAllProjects: getAllProjects,
+                addProject: addProject
             }
         }]);
