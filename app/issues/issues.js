@@ -15,9 +15,14 @@ angular.module('issueTrackerSystem.services.issues', [
                 return requester.get(BASE_URL + 'issues/' + issueId, true);
             }
 
+            function addIssue(issue) {
+                return requester.post(BASE_URL + 'issues/', issue, true);
+            }
+
             return {
                 getIssuesByUser: getIssuesByUser,
-                getIssueById: getIssueById
+                getIssueById: getIssueById,
+                addIssue: addIssue
             }
         }
     ]);

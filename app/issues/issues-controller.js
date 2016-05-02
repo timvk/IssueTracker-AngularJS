@@ -5,6 +5,10 @@ angular.module('issueTrackerSystem.issues', [])
                 templateUrl: 'app/issues/issue-page.html',
                 controller: 'IssuePageCtrl'
             })
+            .when('/projects/:projectId/add-issue', {
+                templateUrl: 'app/issues/add-issue.html',
+                controller: 'AddIssueCtrl'
+            })
     }])
     .controller('IssuePageCtrl', [
         '$scope',
@@ -27,5 +31,15 @@ angular.module('issueTrackerSystem.issues', [])
                 //TODO: test this
                 return $scope.issue.Assignee.Id == identity.getCurrentUser().userId || $scope.issue.Assignee.isAdmin
             }
+        }
+    ])
+    .controller('AddIssueCtrl', [
+        '$scope',
+        '$routeParams',
+        'issues',
+        'identity',
+        function AddIssueCtrl($scope, $routeParams, issues, identity) {
+
+
         }
     ]);
