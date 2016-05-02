@@ -3,8 +3,7 @@
     margin-bottom: 50px;
     background: white;
     padding: 50px 30px;
-    border-radius: 7%;
-    height: 630px;
+    /*height: 630px;*/
 }
 
 body {
@@ -76,4 +75,8 @@ h4 {
     text-align: right;
     font-weight: bold;
     border-right: 5px double #F0AD4E;
+}
+
+.btn-warning {
+    margin: 5px;
 }

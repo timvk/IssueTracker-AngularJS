@@ -12,6 +12,10 @@ angular.module('issueTrackerSystem.projects', [])
             .when('/projects/', {
                 templateUrl: 'app/projects/list-projects.html',
                 controller: 'AllProjectsCtrl'
+            })
+            .when('/projects/:projectId/edit', {
+                templateUrl: 'app/projects/edit-project.html',
+                controller: 'EditProjectCtrl'
             });
     }])
 
@@ -63,6 +67,7 @@ angular.module('issueTrackerSystem.projects', [])
             }
         }
     ])
+
     .controller('AllProjectsCtrl', [
         '$scope',
         'projects',
@@ -75,5 +80,28 @@ angular.module('issueTrackerSystem.projects', [])
                 }, function(error) {
                     console.log(error);
                 })
+        }
+    ])
+
+    .controller('EditProjectCtrl', [
+        '$scope',
+        '$routeParams',
+        'projects',
+        function EditProjectCtrl($scope, $routeParams, projects) {
+
+            projects.getProjectById($routeParams.projectId)
+                .then(function(response) {
+                    var labels = [];
+                    var priorities = [];
+
+                    console.log(response.data);
+                    $scope.project = response.data;
+                }, function(error) {
+
+                });
+
+            $scope.editProject = function() {
+
+            }
         }
     ]);
