@@ -45,12 +45,17 @@ angular.module('issueTrackerSystem.services.projects', [
                 return arrayUnique(leadProjects.concat(issueProjects));
             }
 
+            function editProject(project, projectId) {
+                return requester.put(BASE_URL + 'projects/' + projectId, project, true);
+            }
+
             return {
                 getProjectsByLead: getProjectsByLead,
                 getProjectById: getProjectById,
                 getAllProjects: getAllProjects,
                 addProject: addProject,
                 getProjectsIssues: getProjectsIssues,
-                getAffiliatedProjects: getAffiliatedProjects
+                getAffiliatedProjects: getAffiliatedProjects,
+                editProject: editProject
             }
         }]);

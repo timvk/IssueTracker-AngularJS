@@ -7,6 +7,7 @@ angular.module('issueTrackerSystem', [
     'issueTrackerSystem.home',
     'issueTrackerSystem.services.authentication',
     'issueTrackerSystem.services.identity',
+    'issueTrackerSystem.services.labels',
     'issueTrackerSystem.projects',
     'issueTrackerSystem.issues',
     'issueTrackerSystem.services.projects',

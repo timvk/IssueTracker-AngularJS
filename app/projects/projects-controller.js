@@ -13,7 +13,7 @@ angular.module('issueTrackerSystem.projects', [])
                 templateUrl: 'app/projects/list-projects.html',
                 controller: 'AllProjectsCtrl'
             })
-            .when('/projects/:projectId/edit', {
+            .when('/projects/:id/edit', {
                 templateUrl: 'app/projects/edit-project.html',
                 controller: 'EditProjectCtrl'
             });
@@ -58,8 +58,6 @@ angular.module('issueTrackerSystem.projects', [])
 
                         });
                     //console.log(response.data);
-                }, function (error) {
-                    console.log(error)
                 });
 
             function checkLeader() {
@@ -77,8 +75,6 @@ angular.module('issueTrackerSystem.projects', [])
                 .then(function(response) {
                     $scope.projects = response.data.Projects;
                     console.log(response.data);
-                }, function(error) {
-                    console.log(error);
                 })
         }
     ])
@@ -86,22 +82,56 @@ angular.module('issueTrackerSystem.projects', [])
     .controller('EditProjectCtrl', [
         '$scope',
         '$routeParams',
+        '$location',
         'projects',
         function EditProjectCtrl($scope, $routeParams, projects) {
+            var projectId = $routeParams.id;
 
-            projects.getProjectById($routeParams.projectId)
+            projects.getProjectById($routeParams.id)
                 .then(function(response) {
-                    var labels = [];
-                    var priorities = [];
+                    $scope.labels = "";
+                    $scope.priorities = "";
 
-                    console.log(response.data);
+                    response.data.Labels.forEach(function(l) {
+                        $scope.labels = $scope.labels + l.Name + ', '
+                    });
+
+                    response.data.Priorities.forEach(function(p) {
+                        $scope.priorities = $scope.priorities + p.Name + ', '
+                    });
+
                     $scope.project = response.data;
-                }, function(error) {
-
                 });
 
-            $scope.editProject = function() {
+            $scope.editProject = function(project, projectId) {
+                console.log(project);
+                var labels = project.labels.split(', ');
+                var priorities = project.priorities.split(', ');
 
+                var editProject = {
+                    Name: project.Name,
+                    Description: project.Description,
+                    LeadId: project.LeadId,
+                    labels: [],
+                    priorities: []
+                };
+
+                labels.forEach(function(l) {
+                    editProject.labels.push({Name: l})
+                });
+
+                priorities.forEach(function(p) {
+                    editProject.priorities.push({Name: p})
+                });
+
+                console.log(editProject);
+
+                projects.editProject(editProject, projectId)
+                    .then(function (response){
+                        console.log(response.data);
+                    },function(error) {
+
+                    })
             }
         }
     ]);

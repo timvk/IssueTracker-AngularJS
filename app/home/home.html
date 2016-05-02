@@ -25,14 +25,13 @@
                         <div class="col-lg-9 col-lg-offset-2">
                             <button type="reset" class="btn btn-default">Cancel</button>
                             <button ng-click="login(loginUser)" ng-disabled="loginForm.$invalid"
-                                    class="btn btn-primary">
+                                    class="btn btn-warning">
                                 Login
                             </button>
                         </div>
                     </div>
                 </fieldset>
             </form>
-            <div style="display: none;" class="btn btn-primary btn-xs">&lt; &gt;</div>
         </div>
     </div>
 
@@ -76,13 +75,12 @@
                             <button type="reset" class="btn btn-default">Cancel</button>
                             <button ng-class="register-form.$invalid ? 'disabled-button' : ''"
                                     ng-disabled="registerForm.$invalid || registerUser.password != registerUser.confirmPassword"
-                                    ng-click="register(registerUser)" class="btn btn-primary">Register
+                                    ng-click="register(registerUser)" class="btn btn-warning">Register
                             </button>
                         </div>
                     </div>
                 </fieldset>
             </form>
-            <div style="display: none;" id="source-button" class="btn btn-primary btn-xs">&lt; &gt;</div>
         </div>
     </div>
 </div>

@@ -5,37 +5,44 @@
                 <fieldset>
                     <legend>Edit project</legend>
                     <div class="form-group">
+                        <label for="name" class="col-lg-3 control-label">Name</label>
+
+                        <div class="col-lg-9">
+                            <input ng-model="projectToEdit.Name" required placeholder="{{project.Name}}" class="form-control" id="name" type="text">
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label for="description" class="col-lg-3 control-label">Description</label>
 
                         <div class="col-lg-9">
-                            <textarea ng-model="editProject.Description" required placeholder="{{project.Description}}" class="form-control" rows="3" id="description"></textarea>
+                            <textarea ng-model="projectToEdit.Description" placeholder="{{project.Description}}" class="form-control" rows="3" id="description"></textarea>
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="lead-id" class="col-lg-3 control-label">LeadId</label>
 
                         <div class="col-lg-9">
-                            <input ng-model="editProject.LeadId" required placeholder="{{project.Lead.Id}}" class="form-control" id="lead-id" type="text">
+                            <input ng-model="projectToEdit.LeadId" required placeholder="{{project.Lead.Id}}" class="form-control" id="lead-id" type="text">
                         </div>
                     </div>
-                    <!--<div class="form-group">-->
-                        <!--<label for="labels" class="col-lg-3 control-label">Labels</label>-->
+                    <div class="form-group">
+                        <label for="labels" class="col-lg-3 control-label">Labels</label>
 
-                        <!--<div class="col-lg-9">-->
-                            <!--<input ng-model="editProject.labels" placeholder="{{project.Labels}}" class="form-control" id="labels" type="text">-->
-                        <!--</div>-->
-                    <!--</div>-->
-                    <!--<div class="form-group">-->
-                        <!--<label for="priorities" class="col-lg-3 control-label">Priorities</label>-->
+                        <div class="col-lg-9">
+                            <input ng-model="projectToEdit.labels" placeholder="{{labels}}" class="form-control" id="labels" type="text">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="priorities" class="col-lg-3 control-label">Priorities</label>
 
-                        <!--<div class="col-lg-9">-->
-                            <!--<input ng-model="editProject.priorities" placeholder="{{project.Priorities}}" class="form-control" id="priorities" type="text">-->
-                        <!--</div>-->
-                    <!--</div>-->
+                        <div class="col-lg-9">
+                            <input ng-model="projectToEdit.priorities" placeholder="{{priorities}}" class="form-control" id="priorities" type="text">
+                        </div>
+                    </div>
                     <div class="form-group">
                         <div class="col-lg-9 col-lg-offset-2">
                             <button type="reset" class="btn btn-default">Cancel</button>
-                            <button ng-click="editProject(editProject)" ng-disabled="editProjectForm.$invalid" type="submit" class="btn btn-primary">Add</button>
+                            <button ng-click="editProject(projectToEdit, project.Id)" ng-disabled="editProjectForm.$invalid" type="submit" class="btn btn-warning">Edit</button>
                         </div>
                     </div>
                 </fieldset>
