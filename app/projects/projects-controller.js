@@ -21,19 +21,42 @@ angular.module('issueTrackerSystem.projects', [])
 
     .controller('AddProjectCtrl', [
         '$scope',
-        function ($scope) {
+        'projects',
+        '$location',
+        function ($scope, projects, $location) {
 
             $scope.addProject = function(project){
+
+                //TODO: think of a better way to do it
                 var labels = project.labels.split(', ');
                 var priorities = project.priorities.split(', ');
 
-                console.log(project);
-                //projects.addProject(project)
-                //    .then(function(response) {
-                //        console.log(response);
-                //    }, function(error) {
-                //        console.log(error);
-                //    })
+                var newProject = {
+                    Name: project.Name,
+                    ProjectKey: project.ProjectKey,
+                    Description: project.Description,
+                    LeadId: project.LeadId,
+                    labels: [],
+                    priorities: []
+                };
+
+                labels.forEach(function(l) {
+                    newProject.labels.push({Name: l})
+                });
+
+                priorities.forEach(function(p) {
+                    newProject.priorities.push({Name: p})
+                });
+
+                console.log(newProject);
+
+                projects.addProject(newProject)
+                    .then(function(response) {
+                        console.log(response.data);
+                        $location.path('/');
+                    }, function(error) {
+                        console.log(error);
+                    })
             }
         }
     ])
@@ -84,10 +107,10 @@ angular.module('issueTrackerSystem.projects', [])
         '$routeParams',
         '$location',
         'projects',
-        function EditProjectCtrl($scope, $routeParams, projects) {
+        function EditProjectCtrl($scope, $routeParams, $location, projects) {
             var projectId = $routeParams.id;
 
-            projects.getProjectById($routeParams.id)
+            projects.getProjectById(projectId)
                 .then(function(response) {
                     $scope.labels = "";
                     $scope.priorities = "";
@@ -104,7 +127,8 @@ angular.module('issueTrackerSystem.projects', [])
                 });
 
             $scope.editProject = function(project, projectId) {
-                console.log(project);
+
+                //TODO: maybe move to a service
                 var labels = project.labels.split(', ');
                 var priorities = project.priorities.split(', ');
 
@@ -124,11 +148,10 @@ angular.module('issueTrackerSystem.projects', [])
                     editProject.priorities.push({Name: p})
                 });
 
-                console.log(editProject);
-
                 projects.editProject(editProject, projectId)
                     .then(function (response){
                         console.log(response.data);
+                        $location.path('/');
                     },function(error) {
 
                     })
