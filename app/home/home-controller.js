@@ -1,7 +1,6 @@
 'use strict';
 
-angular.module('issueTrackerSystem.home', [
-])
+angular.module('issueTrackerSystem.home', [])
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider.when('/', {
             templateUrl: 'app/home/home.html',
@@ -59,19 +58,19 @@ angular.module('issueTrackerSystem.home', [
             function getUsersProjects() {
                 projects.getProjectsByLead(identity.getCurrentUser().userId)
                     .then(function (response) {
-                        $scope.projectsLead = response.data.Projects;
+                        var projectsLead = response.data.Projects;
                         //console.log($scope.projectsLead);
                         issues.getIssuesByUser()
                             .then(function (response) {
                                 //console.log(response.data.Issues);
-                                $scope.projectIssues = [];
+                                var projectIssues = [];
                                 $scope.issues = response.data.Issues;
-                                $scope.issues.forEach(function(i){
-                                    $scope.projectIssues.push(i.Project)
+                                $scope.issues.forEach(function (i) {
+                                    projectIssues.push(i.Project)
                                 });
                                 //console.log($scope.projectIssues);
 
-                                $scope.projects = projects.getAffiliatedProjects($scope.projectsLead, $scope.projectIssues);
+                                $scope.projects = projects.getAffiliatedProjects(projectsLead, projectIssues);
 
                             }, function (error) {
                                 console.log(error);

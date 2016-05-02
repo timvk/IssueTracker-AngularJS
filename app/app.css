@@ -28,6 +28,12 @@ body {
     margin: 0 270px;
 }
 
+h4 {
+    color: #F0AD4E;
+    margin-left: 40px;
+    margin-bottom: 30px;
+}
+
 .pattern-style-a
 {
     text-align: left;
@@ -56,13 +62,18 @@ body {
     background: #fff;
 }
 
+.display-table {
+    margin: 10px;
+}
+
 .display-table tr td{
     padding: 10px;
     font-size: 16px;
+
 }
 
 .display-table tr td:nth-child(1){
     text-align: right;
     font-weight: bold;
-    border-right: 5px double #2b81af;
+    border-right: 5px double #F0AD4E;
 }

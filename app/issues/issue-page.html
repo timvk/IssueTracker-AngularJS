@@ -41,8 +41,8 @@
     <div ng-if="checkIfAuthorized" class="col-lg-4">
         <h6>Available Statuses</h6>
         <div ng-repeat="status in issue.AvailableStatuses">
-            <p>{{status.Name}}</p>
-            <button>Change</button>
+            {{status.Name}}
+            <button  class="btn btn-warning">Change</button>
         </div>
     </div>
 </div>

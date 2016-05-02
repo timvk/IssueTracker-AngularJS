@@ -1,12 +1,53 @@
-<div>
-    <!--temporary thingy-->
-    <p>Name: {{project.Name}}</p>
-    <p>Id: {{project.Id}}</p>
-    <p>Description: {{project.Description}}</p>
-    <p>LeaderId: {{project.Lead.Id}}</p>
-    <p>LeaderUsername: {{project.Lead.Username}}</p>
-    <p>ProjectKey: {{project.ProjectKey}}</p>
+<div class="col-lg-4">
+    <h4>{{project.Name}}</h4>
+    <table class="display-table">
+        <tr>
+            <td>Project Key</td>
+            <td>{{project.ProjectKey}}</td>
+        </tr>
+        <tr>
+            <td>Description</td>
+            <td>{{project.Description}}</td>
+        </tr>
+        <tr>
+            <td>Leader</td>
+            <td>{{project.Lead.Username}}</td>
+        </tr>
+        <tr>
+            <td>Labels</td>
+            <td><span  ng-repeat="label in project.Labels">{{label.Name}}, </span></td>
+        </tr>
+        <tr>
+            <td>Priorities</td>
+            <td><span  ng-repeat="priority in project.Priorities">{{priority.Name}}, </span></td>
+        </tr>
+    </table>
     <div ng-if="checkLeader()">
-        <button>Add issue</button>
+        <button class="btn btn-warning">Add issue</button>
     </div>
+</div>
+<div class="bs-component col-lg-8">
+    <h4>Issues</h4>
+    <table class="pattern-style-a col-lg-12">
+        <thead>
+        <tr>
+            <th scope="col">Title</th>
+            <th scope="col">Description</th>
+            <th scope="col">Project</th>
+            <th scope="col">Due Date</th>
+            <th scope="col">Assignee</th>
+            <th scope="col">Author</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="issue in issues">
+            <td><a href="#/issues/{{issue.Id}}">{{issue.Title}}</a></td>
+            <td>{{issue.Description}}</td>
+            <td>{{issue.Project.Name}}</td>
+            <td>{{issue.DueDate}}</td>
+            <td>{{issue.Assignee.Username}}</td>
+            <td>{{issue.Author.Username}}</td>
+        </tr>
+        </tbody>
+    </table>
 </div>

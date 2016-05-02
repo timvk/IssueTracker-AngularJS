@@ -8,7 +8,7 @@ angular.module('issueTrackerSystem.services.issues', [
 
             function getIssuesByUser() {
                 //TODO: deal with the pageSize and pageNumber
-                return requester.get(BASE_URL + 'issues/me?orderBy=DueDate desc, IssueKey&pageSize=5&pageNumber=1', true);
+                return requester.get(BASE_URL + 'issues/me?orderBy=DueDate, IssueKey&pageSize=5&pageNumber=1', true);
             }
 
             function getIssueById(issueId){
