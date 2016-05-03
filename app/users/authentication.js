@@ -26,6 +26,7 @@ angular.module('issueTrackerSystem.services.authentication', [
                 return requester.get(BASE_URL + 'users/me', true);
             }
 
+
             return {
                 registerUser: registerUser,
                 loginUser: loginUser,

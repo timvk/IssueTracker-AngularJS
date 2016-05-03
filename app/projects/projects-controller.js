@@ -23,29 +23,37 @@ angular.module('issueTrackerSystem.projects', [])
         '$scope',
         'projects',
         '$location',
-        function ($scope, projects, $location) {
+        'users',
+        function ($scope, projects, $location, users) {
+
+            $scope.useFilter = function() {
+                users.getUsersByFilter($scope.project.UsernameFilter)
+                    .then(function(response) {
+                        $scope.users = response.data;
+                    })
+            };
 
             $scope.addProject = function(project){
 
                 //TODO: think of a better way to do it
-                var labels = project.labels.split(', ');
-                var priorities = project.priorities.split(', ');
+                var labels = project.labels.split(',');
+                var priorities = project.priorities.split(',');
 
                 var newProject = {
                     Name: project.Name,
                     ProjectKey: project.ProjectKey,
                     Description: project.Description,
-                    LeadId: project.LeadId,
+                    LeadId: $scope.users[0].Id,
                     labels: [],
                     priorities: []
                 };
 
                 labels.forEach(function(l) {
-                    newProject.labels.push({Name: l})
+                    newProject.labels.push({Name: l.trim()})
                 });
 
                 priorities.forEach(function(p) {
-                    newProject.priorities.push({Name: p})
+                    newProject.priorities.push({Name: p.trim()})
                 });
 
                 console.log(newProject);

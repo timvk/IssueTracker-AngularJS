@@ -33,6 +33,7 @@ angular.module('issueTrackerSystem.home', [])
                                 };
 
                                 sessionStorage.currentUser = JSON.stringify(currentUser);
+                                location.reload();
                             });
                     }, function (error) {
                         console.log(error);

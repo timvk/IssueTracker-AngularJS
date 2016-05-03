@@ -12,6 +12,7 @@ angular.module('issueTrackerSystem', [
     'issueTrackerSystem.issues',
     'issueTrackerSystem.services.projects',
     'issueTrackerSystem.services.issues',
+    'issueTrackerSystem.services.users',
     'angular-loading-bar'
 ]).
     config(['$routeProvider', function ($routeProvider) {
