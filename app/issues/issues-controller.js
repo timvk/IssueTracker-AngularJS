@@ -15,15 +15,24 @@ angular.module('issueTrackerSystem.issues', [])
         '$routeParams',
         'issues',
         'identity',
-        function IssuePageCtrl($scope, $routeParams, issues, identity) {
+        'projects',
+        function IssuePageCtrl($scope, $routeParams, issues, identity, projects) {
 
             issues.getIssueById($routeParams.issueId)
-                .then(function(response) {
-                    console.log(response.data);
+                .then(function (response) {
                     $scope.issue = response.data;
                     $scope.checkIfAuthorized = checkIfAssignee();
-                    //console.log($scope.checkIfAuthorized)
-                }, function(error) {
+
+                    var projectId = $scope.issue.Project.Id;
+                    projects.getProjectById(projectId)
+                        .then(function (response) {
+                            $scope.LeaderId = response.data.Lead.Id;
+                            //console.log($scope.LeaderId);
+                            //console.log(identity.getCurrentUser().userId);
+                            $scope.checkLeader = $scope.LeaderId == identity.getCurrentUser().userId;
+                        });
+
+                }, function (error) {
                     console.log(error);
                 });
 

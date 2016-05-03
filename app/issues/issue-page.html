@@ -1,6 +1,6 @@
-<div>
+<div class="col-lg-6">
     <h4>{{issue.IssueKey}}</h4>
-    <table class="display-table col-lg-6">
+    <table class="display-table">
         <tr>
             <td>Title</td>
             <td>{{issue.Title}}</td>
@@ -38,11 +38,16 @@
             <td><span  ng-repeat="label in issue.Labels">{{label.Name}} </span></td>
         </tr>
     </table>
-    <div ng-if="checkIfAuthorized" class="col-lg-4">
-        <h6>Available Statuses</h6>
-        <div ng-repeat="status in issue.AvailableStatuses">
-            {{status.Name}}
-            <button  class="btn btn-warning">Change</button>
+    <div ng-if="checkLeader">
+        <div>
+            <a href="#/issues/{{issue.Id}}/edit" class="btn btn-warning">Edit issue</a>
         </div>
+    </div>
+</div>
+<div ng-if="checkIfAuthorized" class="col-lg-4">
+    <h6>Available Statuses</h6>
+    <div ng-repeat="status in issue.AvailableStatuses">
+        {{status.Name}}
+        <button  class="btn btn-warning">Change</button>
     </div>
 </div>
