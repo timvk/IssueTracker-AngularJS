@@ -21,11 +21,27 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="lead-id" class="col-lg-3 control-label">LeadId</label>
+                        <label for="lead" class="col-lg-3 control-label">Lead</label>
 
                         <div class="col-lg-9">
-                            <input ng-model="projectToEdit.LeadId" disabled placeholder="{{project.Lead.Id}}"
-                                   class="form-control" id="lead-id" type="text">
+                            <!--<div ng-if="isAdmin()">-->
+                                <input ng-change="useFilter()"
+                                       ng-model="projectToEdit.UsernameFilter"
+                                       placeholder="{{project.Lead.Username}}"
+                                       required
+                                       class="form-control" id="lead" type="text">
+                            <!--</div>-->
+                            <!--<div ng-if="!isAdmin()">-->
+                                <!--<input ng-change="useFilter()"-->
+                                       <!--ng-model="projectToEdit.UsernameFilter"-->
+                                       <!--placeholder="{{project.Lead.Username}}"-->
+                                        <!--disabled-->
+                                       <!--required-->
+                                       <!--class="form-control" type="text">-->
+                            <!--</div>-->
+                            <div class="custom-dropdown">
+                                <div ng-repeat="user in users | limitTo: 4">{{user.Username}}</div>
+                            </div>
                         </div>
                     </div>
                     <div class="form-group">

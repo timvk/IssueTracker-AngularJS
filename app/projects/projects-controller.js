@@ -115,8 +115,17 @@ angular.module('issueTrackerSystem.projects', [])
         '$routeParams',
         '$location',
         'projects',
-        function EditProjectCtrl($scope, $routeParams, $location, projects) {
+        'users',
+        'identity',
+        function EditProjectCtrl($scope, $routeParams, $location, projects, users, identity) {
             var projectId = $routeParams.id;
+
+            $scope.useFilter = function() {
+                users.getUsersByFilter($scope.projectToEdit.UsernameFilter)
+                    .then(function(response) {
+                        $scope.users = response.data;
+                    })
+            };
 
             projects.getProjectById(projectId)
                 .then(function(response) {
@@ -143,7 +152,7 @@ angular.module('issueTrackerSystem.projects', [])
                 var editProject = {
                     Name: project.Name,
                     Description: project.Description,
-                    LeadId: project.LeadId,
+                    LeadId: $scope.users[0].Id,
                     labels: [],
                     priorities: []
                 };
@@ -163,6 +172,10 @@ angular.module('issueTrackerSystem.projects', [])
                     },function(error) {
 
                     })
+            };
+
+            $scope.isAdmin = function() {
+                return identity.isAdmin();
             }
         }
     ]);
