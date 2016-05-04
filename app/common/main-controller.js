@@ -7,7 +7,8 @@ angular.module('issueTrackerSystem.common.main', [
         'userAuthentication',
         'identity',
         '$location',
-        function MainCtrl($scope, userAuthentication, identity, $location) {
+        'notify',
+        function MainCtrl($scope, userAuthentication, identity, $location, notify) {
 
             $scope.isAuthenticated = identity.isAuthenticated();
 
@@ -20,6 +21,7 @@ angular.module('issueTrackerSystem.common.main', [
             //TODO: create actual route #/logout
             $scope.logout = function () {
                 userAuthentication.logoutUser();
+                notify('You have successfully logged out.');
                 $scope.isAuthenticated = false;
                 $location.path('/');
             };

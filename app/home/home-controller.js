@@ -15,12 +15,14 @@ angular.module('issueTrackerSystem.home', [])
         'identity',
         'projects',
         'issues',
-        function HomeCtrl($scope, $location, userAuthentication, identity, projects, issues) {
+        'notify',
+        function HomeCtrl($scope, $location, userAuthentication, identity, projects, issues, notify) {
             $scope.isAuthenticated = identity.isAuthenticated();
 
             $scope.login = function (user) {
                 userAuthentication.loginUser(user)
                     .then(function (loggedData) {
+                        notify('You have successfully logged in.');
                         sessionStorage.accessToken = loggedData.data.access_token;
                         $scope.isAuthenticated = true;
                         $location.path('/');
@@ -33,8 +35,11 @@ angular.module('issueTrackerSystem.home', [])
                                 };
 
                                 sessionStorage.currentUser = JSON.stringify(currentUser);
-                                location.reload();
+                                //location.reload();
                             });
+
+
+
                     }, function (error) {
                         console.log(error);
                     })
@@ -43,6 +48,7 @@ angular.module('issueTrackerSystem.home', [])
             $scope.register = function (user) {
                 userAuthentication.registerUser(user)
                     .then(function (response) {
+                        notify('You have successfully registered.');
                         console.log(response);
                         //TODO: test register again
                         $scope.login(user);
@@ -60,10 +66,8 @@ angular.module('issueTrackerSystem.home', [])
                 projects.getProjectsByLead(identity.getCurrentUser().userId)
                     .then(function (response) {
                         var projectsLead = response.data.Projects;
-                        //console.log($scope.projectsLead);
                         issues.getIssuesByUser()
                             .then(function (response) {
-                                //console.log(response.data.Issues);
                                 var projectIssues = [];
                                 $scope.issues = response.data.Issues;
                                 $scope.issues.forEach(function (i) {

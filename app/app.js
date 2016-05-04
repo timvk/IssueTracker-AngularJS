@@ -13,7 +13,8 @@ angular.module('issueTrackerSystem', [
     'issueTrackerSystem.services.projects',
     'issueTrackerSystem.services.issues',
     'issueTrackerSystem.services.users',
-    'angular-loading-bar'
+    'angular-loading-bar',
+    'cgNotify'
 ]).
     config(['$routeProvider', function ($routeProvider) {
         $routeProvider.otherwise({redirectTo: '/'});
