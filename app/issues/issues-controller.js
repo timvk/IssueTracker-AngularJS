@@ -68,11 +68,17 @@ angular.module('issueTrackerSystem.issues', [])
             };
 
             $scope.useLabelFilter = function() {
-                labels.getLabelByFilter($scope.issue.labelFilter)
-                    .then(function(response) {
-                        //console.log(response.data);
-                        $scope.labels = response.data;
-                    })
+                if($scope.issue.labelFilter) {
+                    var inputLabels = $scope.issue.labelFilter.split(',');
+                    var lastLabel = inputLabels[inputLabels.length - 1].trim();
+
+                    labels.getLabelByFilter(lastLabel)
+                        .then(function(response) {
+                            //console.log(response.data);
+                            $scope.labels = response.data;
+                        })
+                }
+
             }
         }
     ]);
