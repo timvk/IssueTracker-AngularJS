@@ -49,6 +49,10 @@ angular.module('issueTrackerSystem.services.projects', [
                 return requester.put(BASE_URL + 'projects/' + projectId, project, true);
             }
 
+            function getProjectsByFilter(filter) {
+                return requester.get(BASE_URL + 'projects?filter=Name.Contains("' + filter + '")&pageSize=4&pageNumber=1');
+            }
+
             return {
                 getProjectsByLead: getProjectsByLead,
                 getProjectById: getProjectById,
@@ -56,6 +60,7 @@ angular.module('issueTrackerSystem.services.projects', [
                 addProject: addProject,
                 getProjectsIssues: getProjectsIssues,
                 getAffiliatedProjects: getAffiliatedProjects,
-                editProject: editProject
+                editProject: editProject,
+                getProjectsByFilter: getProjectsByFilter
             }
         }]);

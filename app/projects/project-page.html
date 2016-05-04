@@ -27,25 +27,25 @@
         <a href="#/projects/{{project.Id}}/edit" class="btn btn-warning">Edit project</a>
     </div>
 </div>
-<div class="bs-component col-lg-8">
+<div class="bs-component col-md-8">
     <h4>Issues</h4>
-    <table class="pattern-style-a col-lg-12">
+    <table class="pattern-style-a table col-md-12">
         <thead>
         <tr>
-            <th scope="col">Title</th>
-            <th scope="col">Description</th>
-            <th scope="col">Due Date</th>
-            <th scope="col">Assignee</th>
-            <th scope="col">Author</th>
+            <th class="col-md-2" scope="col">Title</th>
+            <th  class="col-md-4" scope="col">Description</th>
+            <th  class="col-md-2" scope="col">Due Date</th>
+            <th  class="col-md-2" scope="col">Assignee</th>
+            <th  class="col-md-2" scope="col">Author</th>
         </tr>
         </thead>
         <tbody>
         <tr ng-repeat="issue in issues">
-            <td class="col-md-2"><a href="#/issues/{{issue.Id}}">{{issue.Title}}</a></td>
-            <td class="col-md-4">{{issue.Description}}</td>
-            <td class="col-md-2">{{issue.DueDate}}</td>
-            <td class="col-md-2">{{issue.Assignee.Username}}</td>
-            <td class="col-md-2">{{issue.Author.Username}}</td>
+            <td><a href="#/issues/{{issue.Id}}">{{issue.Title}}</a></td>
+            <td>{{issue.Description}}</td>
+            <td>{{issue.DueDate}}</td>
+            <td>{{issue.Assignee.Username}}</td>
+            <td>{{issue.Author.Username}}</td>
         </tr>
         </tbody>
     </table>

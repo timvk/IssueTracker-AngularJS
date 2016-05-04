@@ -6,7 +6,7 @@
                     <legend>Edit project</legend>
                     <div class="form-group">
                         <label for="name" class="col-lg-3 control-label">Name</label>
-<!--TODO: maybe use value and not placeholder-->
+                        <!--TODO: maybe use value and not placeholder-->
                         <div class="col-lg-9">
                             <input ng-model="projectToEdit.Name" required placeholder="{{project.Name}}"
                                    class="form-control" id="name" type="text">
@@ -24,21 +24,12 @@
                         <label for="lead" class="col-lg-3 control-label">Lead</label>
 
                         <div class="col-lg-9">
-                            <!--<div ng-if="isAdmin()">-->
-                                <input ng-change="useFilter()"
-                                       ng-model="projectToEdit.UsernameFilter"
-                                       placeholder="{{project.Lead.Username}}"
-                                       required
-                                       class="form-control" id="lead" type="text">
-                            <!--</div>-->
-                            <!--<div ng-if="!isAdmin()">-->
-                                <!--<input ng-change="useFilter()"-->
-                                       <!--ng-model="projectToEdit.UsernameFilter"-->
-                                       <!--placeholder="{{project.Lead.Username}}"-->
-                                        <!--disabled-->
-                                       <!--required-->
-                                       <!--class="form-control" type="text">-->
-                            <!--</div>-->
+                            <input ng-change="useFilter()"
+                                   ng-model="projectToEdit.UsernameFilter"
+                                   placeholder="{{project.Lead.Username}}"
+                                   required
+                                   class="form-control" id="lead" type="text">
+
                             <div class="custom-dropdown">
                                 <div ng-repeat="user in users | limitTo: 4">{{user.Username}}</div>
                             </div>

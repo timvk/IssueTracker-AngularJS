@@ -47,8 +47,32 @@ angular.module('issueTrackerSystem.issues', [])
         '$routeParams',
         'issues',
         'identity',
-        function AddIssueCtrl($scope, $routeParams, issues, identity) {
+        'projects',
+        'users',
+        'labels',
+        function AddIssueCtrl($scope, $routeParams, issues, identity, projects, users, labels) {
+            var projectId = $routeParams.projectId;
 
+            projects.getProjectById(projectId)
+                .then(function(response) {
+                    console.log(response.data);
+                    $scope.project = response.data;
+                });
 
+            $scope.useFilter = function() {
+                users.getUsersByFilter($scope.issue.LeadFilter)
+                    .then(function(response) {
+                        //console.log(response.data);
+                        $scope.users = response.data;
+                    })
+            };
+
+            $scope.useLabelFilter = function() {
+                labels.getLabelByFilter($scope.issue.labelFilter)
+                    .then(function(response) {
+                        //console.log(response.data);
+                        $scope.labels = response.data;
+                    })
+            }
         }
     ]);
