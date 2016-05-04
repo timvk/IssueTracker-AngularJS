@@ -50,7 +50,7 @@ angular.module('issueTrackerSystem.services.projects', [
             }
 
             function getProjectsByFilter(filter) {
-                return requester.get(BASE_URL + 'projects?filter=Name.Contains("' + filter + '")&pageSize=4&pageNumber=1');
+                return requester.get(BASE_URL + 'projects?filter=Name.Contains("' + filter + '")&pageSize=4&pageNumber=1', true);
             }
 
             return {

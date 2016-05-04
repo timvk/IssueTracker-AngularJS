@@ -27,8 +27,6 @@ angular.module('issueTrackerSystem.issues', [])
                     projects.getProjectById(projectId)
                         .then(function (response) {
                             $scope.LeaderId = response.data.Lead.Id;
-                            //console.log($scope.LeaderId);
-                            //console.log(identity.getCurrentUser().userId);
                             $scope.checkLeader = $scope.LeaderId == identity.getCurrentUser().userId;
                         });
 
@@ -50,12 +48,13 @@ angular.module('issueTrackerSystem.issues', [])
         'projects',
         'users',
         'labels',
-        function AddIssueCtrl($scope, $routeParams, issues, identity, projects, users, labels) {
+        '$location',
+        function AddIssueCtrl($scope, $routeParams, issues, identity, projects, users, labels, $location) {
             var projectId = $routeParams.projectId;
 
             projects.getProjectById(projectId)
                 .then(function(response) {
-                    console.log(response.data);
+                    //console.log(response.data);
                     $scope.project = response.data;
                 });
 
@@ -69,8 +68,8 @@ angular.module('issueTrackerSystem.issues', [])
 
             $scope.useLabelFilter = function() {
                 if($scope.issue.labelFilter) {
-                    var inputLabels = $scope.issue.labelFilter.split(',');
-                    var lastLabel = inputLabels[inputLabels.length - 1].trim();
+                    $scope.inputLabels = $scope.issue.labelFilter.split(',');
+                    var lastLabel = $scope.inputLabels[$scope.inputLabels.length - 1].trim();
 
                     labels.getLabelByFilter(lastLabel)
                         .then(function(response) {
@@ -78,7 +77,30 @@ angular.module('issueTrackerSystem.issues', [])
                             $scope.labels = response.data;
                         })
                 }
+            };
 
+            $scope.addIssue = function(issue) {
+                var newIssue = {
+                    Title: issue.Title,
+                    Description: issue.Description,
+                    DueDate: issue.DueDate,
+                    ProjectId: projectId,
+                    AssigneeId: $scope.users[0].Id,
+                    PriorityId: issue.PriorityId,
+                    Labels: []
+                };
+
+                $scope.inputLabels.forEach(function(l) {
+                    newIssue.Labels.push({Name: l});
+                });
+
+                console.log(newIssue);
+
+                issues.addIssue(newIssue)
+                    .then(function(response){
+                        console.log(response.data);
+                        $location.path('/');
+                    })
             }
         }
     ]);
