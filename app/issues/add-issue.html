@@ -15,7 +15,8 @@
                         <label for="description" class="col-lg-3 control-label">Description</label>
 
                         <div class="col-lg-9">
-                            <textarea ng-model="issue.Description" required class="form-control" rows="2" id="description"></textarea>
+                            <textarea ng-model="issue.Description" required class="form-control" rows="2"
+                                      id="description"></textarea>
                         </div>
                     </div>
                     <div class="form-group">
@@ -33,21 +34,37 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="lead" class="col-lg-3 control-label">Lead</label>
+                        <label for="assignee" class="col-lg-3 control-label">Assignee</label>
 
                         <div class="col-lg-9">
-                            <input ng-change="useFilter()" ng-model="issue.LeadFilter" required class="form-control" id="lead" type="text">
-                            <div class="custom-dropdown">
-                                <div ng-repeat="user in users | limitTo: 4">{{user.Username}}</div>
-                            </div>
+                            <!--<input ng-change="useFilter()" ng-model="issue.AssigneeFilter" required class="form-control"-->
+                            <!--type="text" list="usersOptions" id="assignee"/>-->
+                            <!--<datalist id="usersOptions">-->
+                            <!--<select>-->
+                            <!--<option ng-repeat="user in users | limitTo: 4" value="{{user.Id}}">-->
+                            <!--{{user.Username}}-->
+                            <!--</option>-->
+                            <!--</select>-->
+                            <!--</datalist>-->
+
+                            <!--<md-autocomplete id="assignee" md-selected-item="selectedUser" md-search-text="searchUser"-->
+                                             <!--md-min-length="2" md-items="user in useFilter(searchUser)"-->
+                                             <!--md-item-text="user.Username"-->
+                                             <!--placeholder="..."-->
+                                             <!--type="email" required="required">-->
+                                <!--<span>{{user.Username}}</span>-->
+                            <!--</md-autocomplete>-->
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="priorities" class="col-lg-3 control-label">Priorities</label>
 
                         <div class="col-lg-9">
-                            <select name="singleSelect" ng-model="issue.PriorityId" class="form-control" id="priorities">
-                                <option ng-repeat="priority in project.Priorities" value="{{priority.Id}}">{{priority.Name}}</option>
+                            <select name="singleSelect" ng-model="issue.PriorityId" class="form-control"
+                                    id="priorities">
+                                <option ng-repeat="priority in project.Priorities" value="{{priority.Id}}">
+                                    {{priority.Name}}
+                                </option>
                             </select>
                         </div>
                     </div>
@@ -55,7 +72,9 @@
                         <label for="labels" class="col-lg-3 control-label">Labels</label>
 
                         <div class="col-lg-9">
-                            <input ng-change="useLabelFilter()" ng-model="issue.labelFilter" required class="form-control" id="labels" type="text">
+                            <input ng-change="useLabelFilter()" ng-model="issue.labelFilter" required
+                                   class="form-control" id="labels" type="text">
+
                             <div class="custom-dropdown">
                                 <div ng-repeat="label in labels | limitTo: 4">{{label.Name}}</div>
                             </div>
@@ -64,10 +83,13 @@
                     <div class="form-group">
                         <div class="col-lg-9 col-lg-offset-2">
                             <button type="reset" class="btn btn-default">Cancel</button>
-                            <button ng-click="addIssue(issue)" ng-disabled="newIssueForm.$invalid" type="submit" class="btn btn-warning">Add</button>
+                            <button ng-click="addIssue(issue)" ng-disabled="newIssueForm.$invalid" type="submit"
+                                    class="btn btn-warning">Add
+                            </button>
                         </div>
                     </div>
                 </fieldset>
+                <div class="clearfix"></div>
             </form>
         </div>
     </div>

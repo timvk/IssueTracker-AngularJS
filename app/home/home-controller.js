@@ -57,6 +57,13 @@ angular.module('issueTrackerSystem.home', [])
                     })
             };
 
+            $scope.pageChanged = function() {
+                issues.getIssuesByUser(null, $scope.pagination.currentPage)
+                    .then(function (response) {
+                        $scope.issues = response.data.Issues;
+                    });
+            };
+
             if ($scope.isAuthenticated) {
                 getUsersProjects();
                 getUsersIssues();
@@ -88,7 +95,13 @@ angular.module('issueTrackerSystem.home', [])
             function getUsersIssues() {
                 issues.getIssuesByUser()
                     .then(function (response) {
+                        console.log(response.data);
                         $scope.issues = response.data.Issues;
+                        $scope.totalCount = response.data.Issues.length;
+                        $scope.pagination = {
+                            currentPage: 1,
+                            pageSize: 2
+                        };
                     }, function (error) {
 
                     })

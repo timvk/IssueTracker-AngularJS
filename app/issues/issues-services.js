@@ -6,9 +6,11 @@ angular.module('issueTrackerSystem.services.issues', [
         'BASE_URL',
         function (requester, BASE_URL) {
 
-            function getIssuesByUser() {
+            function getIssuesByUser(pageSize, pageNumber) {
+                pageSize = pageSize || 4;
+                pageNumber = pageNumber || 1;
                 //TODO: deal with the pageSize and pageNumber
-                return requester.get(BASE_URL + 'issues/me?orderBy=DueDate, IssueKey&pageSize=5&pageNumber=1', true);
+                return requester.get(BASE_URL + 'issues/me?orderBy=DueDate, IssueKey&pageSize=' + pageSize + '&pageNumber=' + pageNumber, true);
             }
 
             function getIssueById(issueId){
@@ -19,10 +21,15 @@ angular.module('issueTrackerSystem.services.issues', [
                 return requester.post(BASE_URL + 'issues/', issue, true);
             }
 
+            function changeStatus(issueId, statusId, issue) {
+                return requester.put(BASE_URL + 'issues/' + issueId + '/changestatus?statusid=' + statusId,issue, true);
+            }
+
             return {
                 getIssuesByUser: getIssuesByUser,
                 getIssueById: getIssueById,
-                addIssue: addIssue
+                addIssue: addIssue,
+                changeStatus: changeStatus
             }
         }
     ]);

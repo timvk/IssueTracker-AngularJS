@@ -16,10 +16,12 @@ angular.module('issueTrackerSystem.issues', [])
         'issues',
         'identity',
         'projects',
-        function IssuePageCtrl($scope, $routeParams, issues, identity, projects) {
+        '$location',
+        function IssuePageCtrl($scope, $routeParams, issues, identity, projects, $location) {
 
             issues.getIssueById($routeParams.issueId)
                 .then(function (response) {
+                    console.log(response.data);
                     $scope.issue = response.data;
                     $scope.checkIfAuthorized = checkIfAssignee();
 
@@ -37,6 +39,14 @@ angular.module('issueTrackerSystem.issues', [])
             function checkIfAssignee() {
                 //TODO: test this
                 return $scope.issue.Assignee.Id == identity.getCurrentUser().userId || $scope.issue.Assignee.isAdmin
+            }
+
+            $scope.changeStatus = function(issueId, statusId) {
+                issues.changeStatus(issueId, statusId, $scope.issue)
+                    .then(function(response) {
+                        console.log(response.data);
+                        $location.path('/issues/' + issueId);
+                    })
             }
         }
     ])
@@ -58,8 +68,9 @@ angular.module('issueTrackerSystem.issues', [])
                     $scope.project = response.data;
                 });
 
-            $scope.useFilter = function() {
-                users.getUsersByFilter($scope.issue.LeadFilter)
+            $scope.useFilter = function(user) {
+                console.log(user);
+                users.getUsersByFilter(user)
                     .then(function(response) {
                         //console.log(response.data);
                         $scope.users = response.data;

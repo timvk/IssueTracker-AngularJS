@@ -48,6 +48,6 @@
     <h6>Available Statuses</h6>
     <div ng-repeat="status in issue.AvailableStatuses">
         {{status.Name}}
-        <button  class="btn btn-warning">Change</button>
+        <button ng-click="changeStatus(issue.Id, status.Id)" class="btn btn-warning">Change</button>
     </div>
 </div>

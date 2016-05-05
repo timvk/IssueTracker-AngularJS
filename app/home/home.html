@@ -6,6 +6,7 @@
                     <legend>Login</legend>
                     <div class="form-group">
                         <label for="email-login" class="col-lg-3 control-label">Name</label>
+
                         <div class="col-lg-9">
                             <input ng-model="loginUser.email" required="required" id="email-login" class="form-control"
                                    type="text">
@@ -96,7 +97,7 @@
             </thead>
             <tbody>
             <tr ng-repeat="project in projects">
-                    <td><a href="#/projects/{{project.Id}}">{{project.Name}}</a></td>
+                <td><a href="#/projects/{{project.Id}}">{{project.Name}}</a></td>
             </tr>
             </tbody>
         </table>
@@ -124,6 +125,10 @@
             </tr>
             </tbody>
         </table>
+        <pagination total-items="totalCount" ng-model="pagination.currentPage" items-per-page="pagination.pageSize"
+                    ng-change="pageChanged()"
+                    maxSize="8">
+        </pagination>
     </div>
 </div>
 
