@@ -26,14 +26,14 @@ angular.module('issueTrackerSystem.projects', [])
         'users',
         function ($scope, projects, $location, users) {
 
-            $scope.useFilter = function() {
+            $scope.useFilter = function () {
                 users.getUsersByFilter($scope.project.UsernameFilter)
-                    .then(function(response) {
+                    .then(function (response) {
                         $scope.users = response.data;
                     })
             };
 
-            $scope.addProject = function(project){
+            $scope.addProject = function (project) {
 
                 //TODO: think of a better way to do it
                 var labels = project.labels.split(',');
@@ -48,21 +48,21 @@ angular.module('issueTrackerSystem.projects', [])
                     priorities: []
                 };
 
-                labels.forEach(function(l) {
+                labels.forEach(function (l) {
                     newProject.labels.push({Name: l.trim()})
                 });
 
-                priorities.forEach(function(p) {
+                priorities.forEach(function (p) {
                     newProject.priorities.push({Name: p.trim()})
                 });
 
                 console.log(newProject);
 
                 projects.addProject(newProject)
-                    .then(function(response) {
+                    .then(function (response) {
                         console.log(response.data);
                         $location.path('/');
-                    }, function(error) {
+                    }, function (error) {
                         console.log(error);
                     })
             }
@@ -73,7 +73,8 @@ angular.module('issueTrackerSystem.projects', [])
         '$routeParams',
         'projects',
         'identity',
-        function ProjectPageCrtl($scope, $routeParams, projects, identity) {
+        'issues',
+        function ProjectPageCrtl($scope, $routeParams, projects, identity, issues) {
             var projectId = $routeParams.projectId;
 
             projects.getProjectById(projectId)
@@ -81,15 +82,28 @@ angular.module('issueTrackerSystem.projects', [])
                     $scope.project = response.data;
                     $scope.checkLeader = checkLeader;
                     console.log($scope.project);
-                    projects.getProjectsIssues($scope.project.Id)
-                        .then(function(response) {
-                            $scope.issues = response.data;
-                            console.log(response.data);
-                        }, function(error) {
+                    issues.getIssuesByFilter('Project.Name', $scope.project.Name)
+                        .then(function (response) {
+                            $scope.issues = response.data.Issues;
+                            $scope.totalCount = response.data.TotalCount;
+                            $scope.totalPages = response.data.TotalPages;
+                            $scope.maxSize = 8;
+                            $scope.pagination = {
+                                currentPage: 1,
+                                pageSize: 3
+                            };
+                        }, function (error) {
 
                         });
-                    //console.log(response.data);
                 });
+
+            $scope.pageChanged = function () {
+                issues.getIssuesByFilter('Project.Name', $scope.project.Name, null, $scope.pagination.currentPage)
+                    .then(function (response) {
+                        $scope.issues = response.data.Issues;
+                        console.log(response.data);
+                    })
+            };
 
             function checkLeader() {
                 return $scope.project.Lead.Id == identity.getCurrentUser().userId;
@@ -102,23 +116,23 @@ angular.module('issueTrackerSystem.projects', [])
         'projects',
         function AllProjectsCtrl($scope, projects) {
 
-            $scope.pageChanged = function() {
+            $scope.pageChanged = function () {
                 projects.getAllProjects(null, $scope.pagination.currentPage)
-                    .then(function(response) {
+                    .then(function (response) {
                         $scope.projects = response.data.Projects;
                         console.log(response.data);
                     })
             };
 
             $scope.listAllProjects = projects.getAllProjects()
-                .then(function(response) {
+                .then(function (response) {
                     $scope.projects = response.data.Projects;
                     $scope.totalCount = response.data.TotalCount;
                     $scope.totalPages = response.data.TotalPages;
                     $scope.maxSize = 8;
                     $scope.pagination = {
                         currentPage: 1,
-                        pageSize: 2
+                        pageSize: 8
                     };
                 })
         }
@@ -134,30 +148,30 @@ angular.module('issueTrackerSystem.projects', [])
         function EditProjectCtrl($scope, $routeParams, $location, projects, users, identity) {
             var projectId = $routeParams.id;
 
-            $scope.useFilter = function() {
+            $scope.useFilter = function () {
                 users.getUsersByFilter($scope.projectToEdit.UsernameFilter)
-                    .then(function(response) {
+                    .then(function (response) {
                         $scope.users = response.data;
                     })
             };
 
             projects.getProjectById(projectId)
-                .then(function(response) {
+                .then(function (response) {
                     $scope.labels = "";
                     $scope.priorities = "";
 
-                    response.data.Labels.forEach(function(l) {
+                    response.data.Labels.forEach(function (l) {
                         $scope.labels = $scope.labels + l.Name + ', '
                     });
 
-                    response.data.Priorities.forEach(function(p) {
+                    response.data.Priorities.forEach(function (p) {
                         $scope.priorities = $scope.priorities + p.Name + ', '
                     });
 
                     $scope.project = response.data;
                 });
 
-            $scope.editProject = function(project, projectId) {
+            $scope.editProject = function (project, projectId) {
 
                 //TODO: maybe move to a service
                 var labels = project.labels.split(', ');
@@ -171,24 +185,24 @@ angular.module('issueTrackerSystem.projects', [])
                     priorities: []
                 };
 
-                labels.forEach(function(l) {
+                labels.forEach(function (l) {
                     editProject.labels.push({Name: l})
                 });
 
-                priorities.forEach(function(p) {
+                priorities.forEach(function (p) {
                     editProject.priorities.push({Name: p})
                 });
 
                 projects.editProject(editProject, projectId)
-                    .then(function (response){
+                    .then(function (response) {
                         console.log(response.data);
                         $location.path('/');
-                    },function(error) {
+                    }, function (error) {
 
                     })
             };
 
-            $scope.isAdmin = function() {
+            $scope.isAdmin = function () {
                 return identity.isAdmin();
             }
         }

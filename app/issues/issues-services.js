@@ -25,11 +25,19 @@ angular.module('issueTrackerSystem.services.issues', [
                 return requester.put(BASE_URL + 'issues/' + issueId + '/changestatus?statusid=' + statusId,issue, true);
             }
 
+            function getIssuesByFilter(filter, filterValue, pageSize, pageNumber) {
+                pageSize = pageSize || 3;
+                pageNumber = pageNumber || 1;
+
+                return requester.get(BASE_URL + 'issues/?filter='+ filter +'== "' + filterValue + '"&pageSize=' + pageSize + '&pageNumber=' + pageNumber, true);
+            }
+
             return {
                 getIssuesByUser: getIssuesByUser,
                 getIssueById: getIssueById,
                 addIssue: addIssue,
-                changeStatus: changeStatus
+                changeStatus: changeStatus,
+                getIssuesByFilter: getIssuesByFilter
             }
         }
     ]);

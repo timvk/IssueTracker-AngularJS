@@ -16,48 +16,52 @@
     <script src="app/bower_components/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js"></script>
 </head>
 <body ng-controller="MainCtrl">
-<div class="main-nav">
-    <div class="navbar navbar-default navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <a href="#/" class="navbar-brand">Issue Tracker</a>
-                <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-            </div>
-            <div ng-if="isAuthenticated" class="navbar-collapse collapse" id="navbar-main">
-                <ul class="nav navbar-nav">
-                    <li>
-                        <a href="#/">Dashboard</a>
-                    </li>
-                    <li ng-if="isAdmin">
-                        <a href="#/projects">All Projects</a>
-                    </li>
-                    <li ng-if="isAdmin">
-                        <a href="#/projects/add">Add Project</a>
-                    </li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#/profile" class="ng-cloak">Hello, {{currentUser.username}}</a></li>
-                    <li><a ng-click="logout()" href="#/logout">Logout</a></li>
-                </ul>
+<div id="wrapper">
+    <div class="main-nav">
+        <div class="navbar navbar-default navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <a href="#/" class="navbar-brand">Issue Tracker</a>
+                    <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+                <div ng-if="isAuthenticated" class="navbar-collapse collapse" id="navbar-main">
+                    <ul class="nav navbar-nav">
+                        <li>
+                            <a href="#/">Dashboard</a>
+                        </li>
+                        <li ng-if="isAdmin">
+                            <a href="#/projects">All Projects</a>
+                        </li>
+                        <li ng-if="isAdmin">
+                            <a href="#/projects/add">Add Project</a>
+                        </li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="#/profile" class="ng-cloak">Hello, {{currentUser.username}}</a></li>
+                        <li><a ng-click="logout()" href="#/logout">Logout</a></li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<div class="clearfix"></div>
-<div class="container main">
-    <div ng-view></div>
-</div>
-<footer>
-    <div class="row">
-        <div class="col-lg-12 text-center">
-            IssueTracker - AngularJSProject
-        </div>
+    <div class="clearfix"></div>
+    <div class="container main">
+        <div ng-view></div>
     </div>
-</footer>
+    <div class="clearfix"></div>
+    <footer>
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                IssueTracker - AngularJSProject
+            </div>
+        </div>
+    </footer>
+</div>
+
 <script src="app/bower_components/angular/angular.js"></script>
 <script src="app/bower_components/angular-route/angular-route.js"></script>
 <script src="app/bower_components/jquery/dist/jquery.js"></script>

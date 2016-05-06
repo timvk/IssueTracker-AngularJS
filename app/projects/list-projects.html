@@ -13,8 +13,10 @@
             <td><a href="#/projects/{{project.Id}}">{{project.Name}}</a></td>
             <td>{{project.Description}}</td>
             <td>{{project.Lead.Username}}</td>
+            <div class="clearfix"></div>
         </tr>
         </tbody>
+
     </table>
     <pagination total-items="totalCount" ng-model="pagination.currentPage" items-per-page="pagination.pageSize"
                 ng-change="pageChanged()"

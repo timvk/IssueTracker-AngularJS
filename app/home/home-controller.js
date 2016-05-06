@@ -34,13 +34,9 @@ angular.module('issueTrackerSystem.home', [])
                                     username: response.data.Username,
                                     isAdmin: response.data.isAdmin
                                 };
-
                                 sessionStorage.currentUser = JSON.stringify(currentUser);
-                                //location.reload();
+                                location.reload();
                             });
-
-
-
                     }, function (error) {
                         console.log(error);
                     })
@@ -51,7 +47,6 @@ angular.module('issueTrackerSystem.home', [])
                     .then(function (response) {
                         notify('You have successfully registered.');
                         console.log(response);
-                        //TODO: test register again
                         $scope.login(user);
                     }, function (error) {
                         console.log(error);
@@ -81,8 +76,6 @@ angular.module('issueTrackerSystem.home', [])
                                 $scope.issues.forEach(function (i) {
                                     projectIssues.push(i.Project)
                                 });
-                                //console.log($scope.projectIssues);
-
                                 $scope.projects = projects.getAffiliatedProjects(projectsLead, projectIssues);
 
                             }, function (error) {

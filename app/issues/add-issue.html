@@ -37,23 +37,12 @@
                         <label for="assignee" class="col-md-3 control-label">Assignee</label>
 
                         <div class="col-md-9">
-                            <!--<input ng-change="useFilter()" ng-model="issue.AssigneeFilter" required class="form-control"-->
-                            <!--type="text" list="usersOptions" id="assignee"/>-->
-                            <!--<datalist id="usersOptions">-->
-                            <!--<select>-->
-                            <!--<option ng-repeat="user in users | limitTo: 4" value="{{user.Id}}">-->
-                            <!--{{user.Username}}-->
-                            <!--</option>-->
-                            <!--</select>-->
-                            <!--</datalist>-->
+                            <input ng-change="useFilter()" ng-model="issue.AssigneeFilter" required class="form-control"
+                                   id="assignee" type="text">
 
-                            <!--<md-autocomplete id="assignee" md-selected-item="selectedUser" md-search-text="searchUser"-->
-                                             <!--md-min-length="2" md-items="user in useFilter(searchUser)"-->
-                                             <!--md-item-text="user.Username"-->
-                                             <!--placeholder="..."-->
-                                             <!--type="email" required="required">-->
-                                <!--<span>{{user.Username}}</span>-->
-                            <!--</md-autocomplete>-->
+                            <div ng-if="isVisible" class="custom-dropdown">
+                                <div ng-repeat="user in users | limitTo: 4" ng-click="setAssignee(user.Username)" >{{user.Username}}</div>
+                            </div>
                         </div>
                     </div>
                     <div class="form-group">
@@ -75,8 +64,8 @@
                             <input ng-change="useLabelFilter()" ng-model="issue.labelFilter" required
                                    class="form-control" id="labels" type="text">
 
-                            <div class="custom-dropdown">
-                                <div ng-repeat="label in labels | limitTo: 4">{{label.Name}}</div>
+                            <div ng-if="isVisible" class="custom-dropdown">
+                                <div ng-repeat="label in labels | limitTo: 4"  ng-click="setLabels(label.Name)" >{{label.Name}}</div>
                             </div>
                         </div>
                     </div>

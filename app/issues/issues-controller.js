@@ -68,13 +68,18 @@ angular.module('issueTrackerSystem.issues', [])
                     $scope.project = response.data;
                 });
 
-            $scope.useFilter = function(user) {
-                console.log(user);
-                users.getUsersByFilter(user)
+            $scope.useFilter = function() {
+                users.getUsersByFilter($scope.issue.AssigneeFilter)
                     .then(function(response) {
                         //console.log(response.data);
                         $scope.users = response.data;
+                        $scope.isVisible = true;
                     })
+            };
+
+            $scope.setAssignee = function(assigneeUsername) {
+                $scope.issue.AssigneeFilter = assigneeUsername;
+                $scope.isVisible = false;
             };
 
             $scope.useLabelFilter = function() {
@@ -86,8 +91,14 @@ angular.module('issueTrackerSystem.issues', [])
                         .then(function(response) {
                             //console.log(response.data);
                             $scope.labels = response.data;
+                            $scope.isVisible = true;
                         })
                 }
+            };
+
+            $scope.setLabels= function(label) {
+                $scope.issue.labelFilter = label;
+                $scope.isVisible = false;
             };
 
             $scope.addIssue = function(issue) {
@@ -110,7 +121,7 @@ angular.module('issueTrackerSystem.issues', [])
                 issues.addIssue(newIssue)
                     .then(function(response){
                         console.log(response.data);
-                        $location.path('/');
+                        $location.path('/projects/' + projectId);
                     })
             }
         }

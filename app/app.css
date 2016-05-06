@@ -12,8 +12,13 @@
 
 body {
     font-size: 14px;
-    background: url("images/swirl_pattern.png");
     font-family: "Raleway","Helvetica Neue",Helvetica,Arial,sans-serif;
+    background: url("images/swirl_pattern.png");
+}
+
+#wrapper {
+    background: url("images/swirl_pattern.png");
+    padding: 20px;
 }
 
 .well {
@@ -74,6 +79,7 @@ h4 {
 .display-table tr td{
     padding: 10px;
     font-size: 16px;
+    overflow:hidden;
 }
 
 .display-table tr td:nth-child(1){
