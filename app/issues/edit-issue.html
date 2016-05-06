@@ -1,9 +1,9 @@
 <div class="row">
     <div class="col-md-6 addProject">
         <div class="well bs-component">
-            <form name="newIssueForm" class="form-horizontal">
+            <form name="editIssueForm" class="form-horizontal">
                 <fieldset>
-                    <legend>Add new issue</legend>
+                    <legend>Edit issue</legend>
                     <div class="form-group">
                         <label for="title" class="col-md-3 control-label">Title</label>
 
@@ -31,21 +31,24 @@
                         <label for="project" class="col-md-3 control-label">Project</label>
 
                         <div class="col-md-9">
-                            <input ng-model="project.Name" disabled class="form-control" id="project" type="text">
+                            <input ng-model="issue.Project.Name" disabled class="form-control" id="project" type="text">
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="assignee" class="col-md-3 control-label">Assignee</label>
+                    <div ng-if="">
+                        <div class="form-group">
+                            <label for="assignee" class="col-md-3 control-label">Assignee</label>
 
-                        <div class="col-md-9">
-                            <input ng-change="useFilter()" ng-model="issue.AssigneeFilter" required class="form-control"
-                                   id="assignee" type="text">
+                            <div class="col-md-9">
+                                <input ng-change="useFilter()" ng-model="issue.AssigneeFilter" required class="form-control"
+                                       id="assignee" type="text">
 
-                            <div ng-if="isVisible" class="custom-dropdown">
-                                <div ng-repeat="user in users | limitTo: 4" ng-click="setAssignee(user.Username)" >{{user.Username}}</div>
+                                <div ng-if="isVisible" class="custom-dropdown">
+                                    <div ng-repeat="user in users | limitTo: 4" ng-click="setAssignee(user.Username)" >{{user.Username}}</div>
+                                </div>
                             </div>
                         </div>
                     </div>
+
                     <div class="form-group">
                         <label for="priorities" class="col-md-3 control-label">Priorities</label>
 
@@ -70,10 +73,23 @@
                             </div>
                         </div>
                     </div>
+                    <!--TODO: check request for edit-no status change???-->
+                    <!--<div class="form-group">-->
+                        <!--<label for="status" class="col-md-3 control-label">Change Status</label>-->
+
+                        <!--<div class="col-md-9">-->
+                            <!--<select name="singleSelect" ng-model="issue.StatusId" class="form-control"-->
+                                    <!--id="status">-->
+                                <!--<option ng-repeat="status in issue.AvailableStatuses" value="{{status.Id}}">-->
+                                    <!--{{status.Name}}-->
+                                <!--</option>-->
+                            <!--</select>-->
+                        <!--</div>-->
+                    <!--</div>-->
                     <div class="form-group">
                         <div class="col-md-9 col-md-offset-2">
                             <button type="reset" class="btn btn-default">Cancel</button>
-                            <button ng-click="addIssue(issue)" ng-disabled="newIssueForm.$invalid" type="submit"
+                            <button ng-click="editIssue(issue)" ng-disabled="editIssueForm.$invalid" type="submit"
                                     class="btn btn-warning">Add
                             </button>
                         </div>

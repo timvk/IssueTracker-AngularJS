@@ -9,6 +9,10 @@ angular.module('issueTrackerSystem.issues', [])
                 templateUrl: 'app/issues/add-issue.html',
                 controller: 'AddIssueCtrl'
             })
+            .when('/issues/:id/edit', {
+                templateUrl: 'app/issues/edit-issue.html',
+                controller: 'EditIssueCtrl'
+            })
     }])
     .controller('IssuePageCtrl', [
         '$scope',
@@ -29,7 +33,10 @@ angular.module('issueTrackerSystem.issues', [])
                     projects.getProjectById(projectId)
                         .then(function (response) {
                             $scope.LeaderId = response.data.Lead.Id;
-                            $scope.checkLeader = $scope.LeaderId == identity.getCurrentUser().userId;
+                            $scope.checkLeader = $scope.LeaderId ==
+                            identity.getCurrentUser().userId ||
+                            $scope.issue.Assignee.Id == identity.getCurrentUser().userId ||
+                            identity.isAdmin();
                         });
 
                 }, function (error) {
@@ -38,12 +45,12 @@ angular.module('issueTrackerSystem.issues', [])
 
             function checkIfAssignee() {
                 //TODO: test this
-                return $scope.issue.Assignee.Id == identity.getCurrentUser().userId || $scope.issue.Assignee.isAdmin
+                return $scope.issue.Assignee.Id == identity.getCurrentUser().userId || identity.isAdmin()
             }
 
-            $scope.changeStatus = function(issueId, statusId) {
+            $scope.changeStatus = function (issueId, statusId) {
                 issues.changeStatus(issueId, statusId, $scope.issue)
-                    .then(function(response) {
+                    .then(function (response) {
                         console.log(response.data);
                         $location.path('/issues/' + issueId);
                     })
@@ -63,38 +70,36 @@ angular.module('issueTrackerSystem.issues', [])
             var projectId = $routeParams.projectId;
 
             projects.getProjectById(projectId)
-                .then(function(response) {
-                    //console.log(response.data);
+                .then(function (response) {
                     $scope.project = response.data;
                 });
 
-            $scope.useFilter = function() {
+            $scope.useFilter = function () {
                 users.getUsersByFilter($scope.issue.AssigneeFilter)
-                    .then(function(response) {
-                        //console.log(response.data);
+                    .then(function (response) {
                         $scope.users = response.data;
                         $scope.isVisible = true;
                     })
             };
 
-            $scope.setAssignee = function(assigneeUsername) {
+            $scope.setAssignee = function (assigneeUsername) {
                 $scope.issue.AssigneeFilter = assigneeUsername;
                 $scope.isVisible = false;
             };
 
             var labelsArr = [];
 
-            $scope.useLabelFilter = function() {
-                if($scope.issue.labelFilter) {
+            $scope.useLabelFilter = function () {
+                if ($scope.issue.labelFilter) {
                     $scope.inputLabels = $scope.issue.labelFilter.split(',');
                     var lastLabel = $scope.inputLabels[$scope.inputLabels.length - 1].trim();
 
                     labels.getLabelByFilter(lastLabel)
-                        .then(function(response) {
+                        .then(function (response) {
                             $scope.labels = response.data;
                             $scope.isLabelsVisible = true;
 
-                            if(!$scope.issue.labelFilter) {
+                            if (!$scope.issue.labelFilter) {
                                 clearLabels(labelsArr);
                             }
                         })
@@ -103,13 +108,13 @@ angular.module('issueTrackerSystem.issues', [])
                 }
             };
 
-            $scope.setLabels= function(label) {
+            $scope.setLabels = function (label) {
                 labelsArr.push(label);
                 $scope.issue.labelFilter = labelsArr.join(', ');
                 $scope.isLabelsVisible = false;
             };
 
-            $scope.addIssue = function(issue) {
+            $scope.addIssue = function (issue) {
                 var newIssue = {
                     Title: issue.Title,
                     Description: issue.Description,
@@ -120,15 +125,14 @@ angular.module('issueTrackerSystem.issues', [])
                     Labels: []
                 };
 
-                $scope.inputLabels.forEach(function(l) {
+                $scope.inputLabels.forEach(function (l) {
                     newIssue.Labels.push({Name: l});
                 });
 
                 console.log(newIssue);
 
                 issues.addIssue(newIssue)
-                    .then(function(response){
-                        console.log(response.data);
+                    .then(function (response) {
                         $location.path('/projects/' + projectId);
                     })
             };
@@ -136,6 +140,93 @@ angular.module('issueTrackerSystem.issues', [])
             function clearLabels(arr) {
                 arr = [];
                 $scope.isLabelsVisible = false;
+            }
+        }
+    ])
+    .controller('EditIssueCtrl', [
+        '$scope',
+        '$routeParams',
+        'issues',
+        'identity',
+        'projects',
+        'users',
+        'labels',
+        '$location',
+        function EditIssueCtrl($scope, $routeParams, issues, identity, projects, users, labels, $location) {
+            var issueId = $routeParams.id;
+
+            issues.getIssueById(issueId)
+                .then(function(response) {
+                    $scope.issue = response.data;
+                    $scope.issue.DueDate = "";
+                    projects.getProjectById($scope.issue.Project.Id)
+                        .then(function(response) {
+                            $scope.project = response.data;
+                            //$scope.canChangeLead =
+                        });
+                }, function(error) {
+
+                });
+
+            //TODO: move to a service
+            $scope.useFilter = function () {
+                users.getUsersByFilter($scope.issue.AssigneeFilter)
+                    .then(function (response) {
+                        $scope.users = response.data;
+                        $scope.isVisible = true;
+                    })
+            };
+
+            $scope.setAssignee = function (assigneeUsername) {
+                $scope.issue.AssigneeFilter = assigneeUsername;
+                $scope.isVisible = false;
+            };
+
+            var labelsArr = [];
+
+            $scope.useLabelFilter = function () {
+                if ($scope.issue.labelFilter) {
+                    $scope.inputLabels = $scope.issue.labelFilter.split(',');
+                    var lastLabel = $scope.inputLabels[$scope.inputLabels.length - 1].trim();
+
+                    labels.getLabelByFilter(lastLabel)
+                        .then(function (response) {
+                            $scope.labels = response.data;
+                            $scope.isLabelsVisible = true;
+
+                            if (!$scope.issue.labelFilter) {
+                                clearLabels(labelsArr);
+                            }
+                        })
+                } else {
+                    clearLabels(labelsArr);
+                }
+            };
+
+            $scope.setLabels = function (label) {
+                labelsArr.push(label);
+                $scope.issue.labelFilter = labelsArr.join(', ');
+                $scope.isLabelsVisible = false;
+            };
+
+            function clearLabels(arr) {
+                arr = [];
+                $scope.isLabelsVisible = false;
+            }
+
+            $scope.editIssue = function(editted) {
+                editted.AssigneeId = $scope.issue.Assignee.Id;
+                editted.Labels = [];
+                $scope.inputLabels.forEach(function(l){
+                    editted.Labels.push({Name: l})
+                });
+
+                //console.log(editted);
+                issues.editIssue(editted, issueId)
+                    .then(function(response) {
+                        console.log(response.data);
+                        $location.path('/issues/' + issueId);
+                    })
             }
         }
     ]);

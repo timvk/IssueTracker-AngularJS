@@ -26,14 +26,14 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="assignee" class="col-md-3 control-label">Assignee</label>
+                        <label for="lead" class="col-md-3 control-label">Assignee</label>
 
                         <div class="col-md-9">
                             <input ng-change="useFilter()" ng-model="project.UsernameFilter" required class="form-control"
-                                   id="assignee" type="text">
+                                   id="lead" type="text">
 
                             <div ng-if="isVisible" class="custom-dropdown">
-                                <div ng-repeat="user in users | limitTo: 4" ng-click="setAssignee(user.Username)" >{{user.Username}}</div>
+                                <div ng-repeat="user in users | limitTo: 4" ng-click="setLead(user.Username)" >{{user.Username}}</div>
                             </div>
                         </div>
                     </div>

@@ -34,8 +34,8 @@ angular.module('issueTrackerSystem.projects', [])
                     })
             };
 
-            $scope.setAssignee = function(assigneeUsername) {
-                $scope.project.UsernameFilter = assigneeUsername;
+            $scope.setLead = function(leadUsername) {
+                $scope.project.UsernameFilter = leadUsername;
                 $scope.isVisible = false;
             };
 
@@ -112,7 +112,7 @@ angular.module('issueTrackerSystem.projects', [])
             };
 
             function checkLeader() {
-                return $scope.project.Lead.Id == identity.getCurrentUser().userId;
+                return $scope.project.Lead.Id == identity.getCurrentUser().userId || identity.isAdmin();
             }
         }
     ])

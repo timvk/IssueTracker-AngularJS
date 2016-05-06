@@ -32,12 +32,17 @@ angular.module('issueTrackerSystem.services.issues', [
                 return requester.get(BASE_URL + 'issues/?filter='+ filter +'== "' + filterValue + '"&pageSize=' + pageSize + '&pageNumber=' + pageNumber, true);
             }
 
+            function editIssue(editted, editedId) {
+                return requester.put(BASE_URL + 'issues/' + editedId, editted, true);
+            }
+
             return {
                 getIssuesByUser: getIssuesByUser,
                 getIssueById: getIssueById,
                 addIssue: addIssue,
                 changeStatus: changeStatus,
-                getIssuesByFilter: getIssuesByFilter
+                getIssuesByFilter: getIssuesByFilter,
+                editIssue: editIssue
             }
         }
     ]);
