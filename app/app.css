@@ -49,6 +49,7 @@ h4 {
     border-collapse: collapse;
     background: url('images/pattern.png');
     color: black;
+    table-layout:fixed;
 }
 .pattern-style-a thead tr th
 {
@@ -66,6 +67,8 @@ h4 {
     padding: 8px;
     border-bottom: 1px solid #fff;
     border-top: 1px solid transparent;
+    overflow:hidden;
+    white-space:nowrap;
 }
 .pattern-style-a tbody tr:hover td
 {
@@ -79,7 +82,6 @@ h4 {
 .display-table tr td{
     padding: 10px;
     font-size: 16px;
-    overflow:hidden;
 }
 
 .display-table tr td:nth-child(1){
@@ -98,4 +100,16 @@ h4 {
     z-index: 999;
     width:90%;
     right: 20px;
+}
+
+.uib-datepicker .uib-title {
+    width: 100%;
+}
+
+.uib-day button, .uib-month button, .uib-year button {
+    min-width: 100%;
+}
+
+.uib-left, .uib-right {
+    width: 100%
 }

@@ -64,7 +64,7 @@
                             <input ng-change="useLabelFilter()" ng-model="issue.labelFilter" required
                                    class="form-control" id="labels" type="text">
 
-                            <div ng-if="isVisible" class="custom-dropdown">
+                            <div ng-if="isLabelsVisible" class="custom-dropdown">
                                 <div ng-repeat="label in labels | limitTo: 4"  ng-click="setLabels(label.Name)" >{{label.Name}}</div>
                             </div>
                         </div>

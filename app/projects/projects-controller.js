@@ -30,7 +30,13 @@ angular.module('issueTrackerSystem.projects', [])
                 users.getUsersByFilter($scope.project.UsernameFilter)
                     .then(function (response) {
                         $scope.users = response.data;
+                        $scope.isVisible = true;
                     })
+            };
+
+            $scope.setAssignee = function(assigneeUsername) {
+                $scope.project.UsernameFilter = assigneeUsername;
+                $scope.isVisible = false;
             };
 
             $scope.addProject = function (project) {

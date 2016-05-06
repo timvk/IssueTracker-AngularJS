@@ -82,6 +82,8 @@ angular.module('issueTrackerSystem.issues', [])
                 $scope.isVisible = false;
             };
 
+            var labelsArr = [];
+
             $scope.useLabelFilter = function() {
                 if($scope.issue.labelFilter) {
                     $scope.inputLabels = $scope.issue.labelFilter.split(',');
@@ -89,16 +91,22 @@ angular.module('issueTrackerSystem.issues', [])
 
                     labels.getLabelByFilter(lastLabel)
                         .then(function(response) {
-                            //console.log(response.data);
                             $scope.labels = response.data;
-                            $scope.isVisible = true;
+                            $scope.isLabelsVisible = true;
+
+                            if(!$scope.issue.labelFilter) {
+                                clearLabels(labelsArr);
+                            }
                         })
+                } else {
+                    clearLabels(labelsArr);
                 }
             };
 
             $scope.setLabels= function(label) {
-                $scope.issue.labelFilter = label;
-                $scope.isVisible = false;
+                labelsArr.push(label);
+                $scope.issue.labelFilter = labelsArr.join(', ');
+                $scope.isLabelsVisible = false;
             };
 
             $scope.addIssue = function(issue) {
@@ -123,6 +131,11 @@ angular.module('issueTrackerSystem.issues', [])
                         console.log(response.data);
                         $location.path('/projects/' + projectId);
                     })
+            };
+
+            function clearLabels(arr) {
+                arr = [];
+                $scope.isLabelsVisible = false;
             }
         }
     ]);

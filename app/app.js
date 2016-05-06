@@ -3,10 +3,9 @@
 angular.module('issueTrackerSystem', [
     'ngRoute',
     'cgNotify',
-    'ngSanitize',
-    'ngMessages',
-    'ngMaterial',
     'ui.bootstrap.pagination',
+    'ui.bootstrap.datepicker',
+    'ui.bootstrap.dateparser',
     'issueTrackerSystem.common.requester',
     'issueTrackerSystem.common.main',
     'issueTrackerSystem.home',
