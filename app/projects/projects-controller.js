@@ -24,7 +24,8 @@ angular.module('issueTrackerSystem.projects', [])
         'projects',
         '$location',
         'users',
-        function ($scope, projects, $location, users) {
+        'notify',
+        function ($scope, projects, $location, users, notify) {
 
             $scope.useFilter = function () {
                 users.getUsersByFilter($scope.project.UsernameFilter)
@@ -67,6 +68,7 @@ angular.module('issueTrackerSystem.projects', [])
                 projects.addProject(newProject)
                     .then(function (response) {
                         console.log(response.data);
+                        notify('You have successfully added a new project.');
                         $location.path('/');
                     }, function (error) {
                         console.log(error);
@@ -151,7 +153,8 @@ angular.module('issueTrackerSystem.projects', [])
         'projects',
         'users',
         'identity',
-        function EditProjectCtrl($scope, $routeParams, $location, projects, users, identity) {
+        'notify',
+        function EditProjectCtrl($scope, $routeParams, $location, projects, users, identity, notify) {
             var projectId = $routeParams.id;
 
             $scope.useFilter = function () {
@@ -202,6 +205,7 @@ angular.module('issueTrackerSystem.projects', [])
                 projects.editProject(editProject, projectId)
                     .then(function (response) {
                         console.log(response.data);
+                        notify('Project successfully edited.');
                         $location.path('/');
                     }, function (error) {
 

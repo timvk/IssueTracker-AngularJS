@@ -14,6 +14,7 @@ angular.module('issueTrackerSystem', [
     'issueTrackerSystem.services.labels',
     'issueTrackerSystem.projects',
     'issueTrackerSystem.issues',
+    'issueTrackerSystem.users',
     'issueTrackerSystem.services.projects',
     'issueTrackerSystem.services.issues',
     'issueTrackerSystem.services.users',

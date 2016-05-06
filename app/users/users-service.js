@@ -12,8 +12,13 @@ angular.module('issueTrackerSystem.services.users', [])
                 return requester.get(BASE_URL + '/users', true);
             }
 
+            function changePassword(data) {
+                return requester.post(BASE_URL + 'api/Account/ChangePassword', data, true);
+            }
+
             return {
                 getUsersByFilter: getUsersByFilter,
-                getAllUsers: getAllUsers
+                getAllUsers: getAllUsers,
+                changePassword: changePassword
             }
         }]);

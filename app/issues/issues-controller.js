@@ -66,7 +66,8 @@ angular.module('issueTrackerSystem.issues', [])
         'users',
         'labels',
         '$location',
-        function AddIssueCtrl($scope, $routeParams, issues, identity, projects, users, labels, $location) {
+        'notify',
+        function AddIssueCtrl($scope, $routeParams, issues, identity, projects, users, labels, $location, notify) {
             var projectId = $routeParams.projectId;
 
             projects.getProjectById(projectId)
@@ -134,6 +135,7 @@ angular.module('issueTrackerSystem.issues', [])
                 issues.addIssue(newIssue)
                     .then(function (response) {
                         $location.path('/projects/' + projectId);
+                        notify('You have successfully added a new issue.');
                     })
             };
 
@@ -152,7 +154,8 @@ angular.module('issueTrackerSystem.issues', [])
         'users',
         'labels',
         '$location',
-        function EditIssueCtrl($scope, $routeParams, issues, identity, projects, users, labels, $location) {
+        'notify',
+        function EditIssueCtrl($scope, $routeParams, issues, identity, projects, users, labels, $location, notify) {
             var issueId = $routeParams.id;
 
             issues.getIssueById(issueId)
@@ -226,6 +229,7 @@ angular.module('issueTrackerSystem.issues', [])
                     .then(function(response) {
                         console.log(response.data);
                         $location.path('/issues/' + issueId);
+                        notify('You have successfully edited the issue.');
                     })
             }
         }
