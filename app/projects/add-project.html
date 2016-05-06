@@ -1,34 +1,34 @@
 <div class="row">
-    <div class="col-lg-6 addProject">
+    <div class="col-md-6 addProject">
         <div class="well bs-component">
             <form name="newProjectForm" class="form-horizontal">
                 <fieldset>
                     <legend>Add new project</legend>
                     <div class="form-group">
-                        <label for="name" class="col-lg-3 control-label">Name</label>
+                        <label for="name" class="col-md-3 control-label">Name</label>
 
-                        <div class="col-lg-9">
+                        <div class="col-md-9">
                             <input ng-model="project.Name" required class="form-control" id="name" type="text">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="description" class="col-lg-3 control-label">Description</label>
+                        <label for="description" class="col-md-3 control-label">Description</label>
 
-                        <div class="col-lg-9">
+                        <div class="col-md-9">
                             <textarea ng-model="project.Description" required class="form-control" rows="3" id="description"></textarea>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="project-key" class="col-lg-3 control-label">Project Key</label>
+                        <label for="project-key" class="col-md-3 control-label">Project Key</label>
 
-                        <div class="col-lg-9">
+                        <div class="col-md-9">
                             <input ng-model="project.ProjectKey" required class="form-control" id="project-key" type="text">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="lead" class="col-lg-3 control-label">Lead</label>
+                        <label for="lead" class="col-md-3 control-label">Lead</label>
 
-                        <div class="col-lg-9">
+                        <div class="col-md-9">
                             <input ng-change="useFilter()" ng-model="project.UsernameFilter" required class="form-control" id="lead" type="text">
                             <div class="custom-dropdown">
                                 <div ng-repeat="user in users | limitTo: 4">{{user.Username}}</div>
@@ -36,21 +36,21 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="labels" class="col-lg-3 control-label">Labels</label>
+                        <label for="labels" class="col-md-3 control-label">Labels</label>
 
-                        <div class="col-lg-9">
+                        <div class="col-md-9">
                             <input ng-model="project.labels" class="form-control" id="labels" type="text">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="priorities" class="col-lg-3 control-label">Priorities</label>
+                        <label for="priorities" class="col-md-3 control-label">Priorities</label>
 
-                        <div class="col-lg-9">
+                        <div class="col-md-9">
                             <input ng-model="project.priorities" class="form-control" id="priorities" type="text">
                         </div>
                     </div>
                     <div class="form-group">
-                        <div class="col-lg-9 col-lg-offset-2">
+                        <div class="col-md-9 col-md-offset-2">
                             <button type="reset" class="btn btn-default">Cancel</button>
                             <button ng-click="addProject(project)" ng-disabled="newProjectForm.$invalid" type="submit" class="btn btn-warning">Add</button>
                         </div>

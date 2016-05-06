@@ -1,4 +1,4 @@
-<div class="col-lg-6">
+<div class="col-md-6">
     <h4>{{issue.IssueKey}}</h4>
     <table class="display-table">
         <tr>
@@ -44,7 +44,7 @@
         </div>
     </div>
 </div>
-<div ng-if="checkIfAuthorized" class="col-lg-4">
+<div ng-if="checkIfAuthorized" class="col-md-4">
     <h6>Available Statuses</h6>
     <div ng-repeat="status in issue.AvailableStatuses">
         {{status.Name}}

@@ -17,8 +17,10 @@ angular.module('issueTrackerSystem.services.projects', [
                 return requester.get(BASE_URL + 'projects/' + projectId, true);
             }
 
-            function getAllProjects() {
-                return requester.get(BASE_URL + 'projects?filter=&pageSize=8&pageNumber=1', true);
+            function getAllProjects(pageSize, pageNumber) {
+                pageSize = pageSize || 8;
+                pageNumber = pageNumber || 1;
+                return requester.get(BASE_URL + 'projects?filter=&pageSize=' + pageSize + '&pageNumber=' + pageNumber, true);
             }
 
             function addProject(project) {

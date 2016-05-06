@@ -1,42 +1,42 @@
 <div class="row">
-    <div class="col-lg-6 addProject">
+    <div class="col-md-6 addProject">
         <div class="well bs-component">
             <form name="newIssueForm" class="form-horizontal">
                 <fieldset>
                     <legend>Add new issue</legend>
                     <div class="form-group">
-                        <label for="title" class="col-lg-3 control-label">Title</label>
+                        <label for="title" class="col-md-3 control-label">Title</label>
 
-                        <div class="col-lg-9">
+                        <div class="col-md-9">
                             <input ng-model="issue.Title" required class="form-control" id="title" type="text">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="description" class="col-lg-3 control-label">Description</label>
+                        <label for="description" class="col-md-3 control-label">Description</label>
 
-                        <div class="col-lg-9">
+                        <div class="col-md-9">
                             <textarea ng-model="issue.Description" required class="form-control" rows="2"
                                       id="description"></textarea>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="dueDate" class="col-lg-3 control-label">Due Date</label>
+                        <label for="dueDate" class="col-md-3 control-label">Due Date</label>
 
-                        <div class="col-lg-9">
+                        <div class="col-md-9">
                             <input ng-model="issue.DueDate" required class="form-control" id="dueDate" type="date">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="project" class="col-lg-3 control-label">Project</label>
+                        <label for="project" class="col-md-3 control-label">Project</label>
 
-                        <div class="col-lg-9">
+                        <div class="col-md-9">
                             <input ng-model="project.Name" disabled class="form-control" id="project" type="text">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="assignee" class="col-lg-3 control-label">Assignee</label>
+                        <label for="assignee" class="col-md-3 control-label">Assignee</label>
 
-                        <div class="col-lg-9">
+                        <div class="col-md-9">
                             <!--<input ng-change="useFilter()" ng-model="issue.AssigneeFilter" required class="form-control"-->
                             <!--type="text" list="usersOptions" id="assignee"/>-->
                             <!--<datalist id="usersOptions">-->
@@ -57,9 +57,9 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="priorities" class="col-lg-3 control-label">Priorities</label>
+                        <label for="priorities" class="col-md-3 control-label">Priorities</label>
 
-                        <div class="col-lg-9">
+                        <div class="col-md-9">
                             <select name="singleSelect" ng-model="issue.PriorityId" class="form-control"
                                     id="priorities">
                                 <option ng-repeat="priority in project.Priorities" value="{{priority.Id}}">
@@ -69,9 +69,9 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="labels" class="col-lg-3 control-label">Labels</label>
+                        <label for="labels" class="col-md-3 control-label">Labels</label>
 
-                        <div class="col-lg-9">
+                        <div class="col-md-9">
                             <input ng-change="useLabelFilter()" ng-model="issue.labelFilter" required
                                    class="form-control" id="labels" type="text">
 
@@ -81,7 +81,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <div class="col-lg-9 col-lg-offset-2">
+                        <div class="col-md-9 col-md-offset-2">
                             <button type="reset" class="btn btn-default">Cancel</button>
                             <button ng-click="addIssue(issue)" ng-disabled="newIssueForm.$invalid" type="submit"
                                     class="btn btn-warning">Add

@@ -102,10 +102,24 @@ angular.module('issueTrackerSystem.projects', [])
         'projects',
         function AllProjectsCtrl($scope, projects) {
 
+            $scope.pageChanged = function() {
+                projects.getAllProjects(null, $scope.pagination.currentPage)
+                    .then(function(response) {
+                        $scope.projects = response.data.Projects;
+                        console.log(response.data);
+                    })
+            };
+
             $scope.listAllProjects = projects.getAllProjects()
                 .then(function(response) {
                     $scope.projects = response.data.Projects;
-                    console.log(response.data);
+                    $scope.totalCount = response.data.TotalCount;
+                    $scope.totalPages = response.data.TotalPages;
+                    $scope.maxSize = 8;
+                    $scope.pagination = {
+                        currentPage: 1,
+                        pageSize: 2
+                    };
                 })
         }
     ])

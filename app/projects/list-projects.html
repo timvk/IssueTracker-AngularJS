@@ -16,4 +16,8 @@
         </tr>
         </tbody>
     </table>
+    <pagination total-items="totalCount" ng-model="pagination.currentPage" items-per-page="pagination.pageSize"
+                ng-change="pageChanged()"
+                max-size="maxSize" boundary-links="true">
+    </pagination>
 </div>

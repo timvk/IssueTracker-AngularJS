@@ -26,6 +26,7 @@ angular.module('issueTrackerSystem.home', [])
                         sessionStorage.accessToken = loggedData.data.access_token;
                         $scope.isAuthenticated = true;
                         $location.path('/');
+
                         userAuthentication.getCurrentUser()
                             .then(function (response) {
                                 var currentUser = {
@@ -97,10 +98,11 @@ angular.module('issueTrackerSystem.home', [])
                     .then(function (response) {
                         console.log(response.data);
                         $scope.issues = response.data.Issues;
-                        $scope.totalCount = response.data.Issues.length;
+                        $scope.totalCount = response.data.TotalCount;
+                        $scope.totalPages = response.data.TotalPages;
                         $scope.pagination = {
                             currentPage: 1,
-                            pageSize: 2
+                            pageSize: 4
                         };
                     }, function (error) {
 
