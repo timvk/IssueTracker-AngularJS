@@ -16,7 +16,8 @@ angular.module('issueTrackerSystem.home', [])
         'projects',
         'issues',
         'notify',
-        function HomeCtrl($scope, $location, userAuthentication, identity, projects, issues, notify) {
+        '$route',
+        function HomeCtrl($scope, $location, userAuthentication, identity, projects, issues, notify, $route) {
             $scope.isAuthenticated = identity.isAuthenticated();
 
             $scope.login = function (user) {
@@ -35,7 +36,7 @@ angular.module('issueTrackerSystem.home', [])
                                     isAdmin: response.data.isAdmin
                                 };
                                 sessionStorage.currentUser = JSON.stringify(currentUser);
-                                location.reload();
+                                $route.reload();
                             });
                     }, function (error) {
                         notify({message: 'Invalid credentials.', classes: 'red-message'});

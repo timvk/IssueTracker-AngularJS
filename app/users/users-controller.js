@@ -3,7 +3,15 @@ angular.module('issueTrackerSystem.users', [])
         $routeProvider
             .when('/profile/password', {
                 templateUrl: 'app/users/change-password.html',
-                controller: 'ChangePasswordCtrl'
+                controller: 'ChangePasswordCtrl',
+                resolve: {
+                    access: ['$location', 'identity', 'notify', function($location, identity, notify){
+                        if(!identity.isAuthenticated()){
+                            $location.path('/');
+                            notify({message: 'Only logged users can access this page.', classes: 'red-message'});
+                        }
+                    }]
+                }
             })
     }])
     .controller('ChangePasswordCtrl', [

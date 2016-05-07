@@ -3,15 +3,59 @@ angular.module('issueTrackerSystem.issues', [])
         $routeProvider
             .when('/issues/:issueId', {
                 templateUrl: 'app/issues/issue-page.html',
-                controller: 'IssuePageCtrl'
+                controller: 'IssuePageCtrl',
+                resolve: {
+                    access: ['$location', 'identity', 'notify', function ($location, identity, notify) {
+                        if (!identity.isAuthenticated()) {
+                            notify({message: 'Only logged users can access this page.', classes: 'red-message'});
+                            $location.path('/');
+                        }
+                    }]
+                }
             })
             .when('/projects/:projectId/add-issue', {
                 templateUrl: 'app/issues/add-issue.html',
-                controller: 'AddIssueCtrl'
+                controller: 'AddIssueCtrl',
+                resolve: {
+                    access: ['$location', 'identity', 'notify','$route', 'projects',
+                        function ($location, identity, notify, $route, projects) {
+                        if (!identity.isAuthenticated()) {
+                            notify({message: 'Only logged users can access this page.', classes: 'red-message'});
+                            $location.path('/');
+                        }
+
+                        var project = projects.getProjectById($route.current.params.projectId)
+                            .then(function(project){
+                                var currentUser = identity.getCurrentUser();
+                                if(currentUser.userId != project.data.Lead.Id && !identity.isAdmin()){
+                                    notify({message: 'Only project lead or an administrator allowed', classes: 'red-message'});
+                                    $location.path('/');
+                                }
+                            });
+                    }]
+                }
             })
             .when('/issues/:id/edit', {
                 templateUrl: 'app/issues/edit-issue.html',
-                controller: 'EditIssueCtrl'
+                controller: 'EditIssueCtrl',
+                resolve: {
+                    access: ['$location', 'identity', 'notify','$route', 'projects',
+                        function ($location, identity, notify, $route, projects) {
+                            if (!identity.isAuthenticated()) {
+                                notify({message: 'Only logged users can access this page.', classes: 'red-message'});
+                                $location.path('/');
+                            }
+
+                            var project = projects.getProjectById($route.current.params.projectId)
+                                .then(function(project){
+                                    var currentUser = identity.getCurrentUser();
+                                    if(currentUser.userId != project.data.Lead.Id && !identity.isAdmin()){
+                                        notify({message: 'Only project lead or an administrator allowed', classes: 'red-message'});
+                                        $location.path('/');
+                                    }
+                                });
+                        }]
+                }
             })
     }])
     .controller('IssuePageCtrl', [
@@ -21,7 +65,8 @@ angular.module('issueTrackerSystem.issues', [])
         'identity',
         'projects',
         '$location',
-        function IssuePageCtrl($scope, $routeParams, issues, identity, projects, $location) {
+        '$route',
+        function IssuePageCtrl($scope, $routeParams, issues, identity, projects, $location, $route) {
 
             issues.getIssueById($routeParams.issueId)
                 .then(function (response) {
@@ -49,6 +94,7 @@ angular.module('issueTrackerSystem.issues', [])
                 issues.changeStatus(issueId, statusId, $scope.issue)
                     .then(function (response) {
                         $location.path('/issues/' + issueId);
+                        $route.reload();
                         notify('You have successfully changed the status.');
                     });
             }

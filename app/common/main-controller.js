@@ -15,10 +15,8 @@ angular.module('issueTrackerSystem.common.main', [
             if($scope.isAuthenticated) {
                 $scope.currentUser = identity.getCurrentUser();
                 $scope.isAdmin = $scope.currentUser.isAdmin;
-                //console.log($scope.isAdmin);
             }
 
-            //TODO: create actual route #/logout
             $scope.logout = function () {
                 userAuthentication.logoutUser();
                 notify('You have successfully logged out.');

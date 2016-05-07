@@ -3,19 +3,61 @@ angular.module('issueTrackerSystem.projects', [])
         $routeProvider
             .when('/projects/add', {
                 templateUrl: 'app/projects/add-project.html',
-                controller: 'AddProjectCtrl'
+                controller: 'AddProjectCtrl',
+                resolve: {
+                    access: ['$location', 'identity', 'notify', function ($location, identity, notify) {
+                        if (!identity.isAuthenticated() || !identity.getCurrentUser().isAdmin) {
+                            notify({message: 'Only admins can access this page.', classes: 'red-message'});
+                            $location.path('/');
+                        }
+                    }]
+                }
             })
             .when('/projects/:projectId', {
                 templateUrl: 'app/projects/project-page.html',
-                controller: 'ProjectPageCtrl'
+                controller: 'ProjectPageCtrl',
+                resolve: {
+                    access: ['$location', 'identity', 'notify', function ($location, identity, notify) {
+                        if (!identity.isAuthenticated()) {
+                            notify({message: 'Only logged users can access this page.', classes: 'red-message'});
+                            $location.path('/');
+                        }
+                    }]
+                }
             })
             .when('/projects/', {
                 templateUrl: 'app/projects/list-projects.html',
-                controller: 'AllProjectsCtrl'
+                controller: 'AllProjectsCtrl',
+                resolve: {
+                    access: ['$location', 'identity', 'notify', function ($location, identity, notify) {
+                        if (!identity.isAuthenticated() || !identity.getCurrentUser().isAdmin) {
+                            notify({message: 'Only admins can access this page.', classes: 'red-message'});
+                            $location.path('/');
+                        }
+                    }]
+                }
             })
             .when('/projects/:id/edit', {
                 templateUrl: 'app/projects/edit-project.html',
-                controller: 'EditProjectCtrl'
+                controller: 'EditProjectCtrl',
+                resolve: {
+                    access: ['$location', 'identity', 'notify','$route', 'projects',
+                        function ($location, identity, notify, $route, projects) {
+                            if (!identity.isAuthenticated()) {
+                                notify({message: 'Only logged users can access this page.', classes: 'red-message'});
+                                $location.path('/');
+                            }
+
+                            var project = projects.getProjectById($route.current.params.id)
+                                .then(function(project){
+                                    var currentUser = identity.getCurrentUser();
+                                    if(currentUser.userId != project.data.Lead.Id && !identity.isAdmin()){
+                                        notify({message: 'Only project lead or an administrator allowed', classes: 'red-message'});
+                                        $location.path('/');
+                                    }
+                                });
+                        }]
+                }
             });
     }])
 
@@ -42,7 +84,7 @@ angular.module('issueTrackerSystem.projects', [])
 
             $scope.addProject = function (project) {
                 users.getUsersByFilter($scope.project.UsernameFilter)
-                    .then(function(response) {
+                    .then(function (response) {
                         $scope.user = response.data;
                         var labels = project.labels.split(',');
                         var priorities = project.priorities.split(',');
