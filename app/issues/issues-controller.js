@@ -98,11 +98,13 @@ angular.module('issueTrackerSystem.issues', [])
                             $scope.isLabelsVisible = true;
 
                             if (!$scope.issue.labelFilter) {
-                                clearLabels($scope.labelsArr);
+                                $scope.issue.labelFilter = [];
+                                $scope.isLabelsVisible = false;
                             }
                         })
                 } else {
-                    clearLabels($scope.labelsArr);
+                    $scope.issue.labelFilter = [];
+                    $scope.isLabelsVisible = false;
                 }
             };
 
@@ -113,33 +115,27 @@ angular.module('issueTrackerSystem.issues', [])
             };
 
             $scope.addIssue = function (issue) {
-                var newIssue = {
-                    Title: issue.Title,
-                    Description: issue.Description,
-                    DueDate: issue.DueDate,
-                    ProjectId: projectId,
-                    AssigneeId: $scope.users[0].Id,
-                    PriorityId: issue.PriorityId,
-                    Labels: []
-                };
-
-                $scope.inputLabels.forEach(function (l) {
-                    newIssue.Labels.push({Name: l});
-                });
-
-                issues.addIssue(newIssue)
+                users.getUsersByFilter($scope.issue.AssigneeFilter)
                     .then(function (response) {
-                        $location.path('/projects/' + projectId);
-                        notify('You have successfully added a new issue.');
-                    }, function(error) {
-                        notify({message: 'Cannot ass issue.', classes: 'red-message'});
-                    })
-            };
+                        $scope.user = response.data;
+                        issue.ProjectId= projectId;
+                        issue.AssigneeId= $scope.user[0].Id;
+                        issue.Labels = [];
 
-            function clearLabels(arr) {
-                arr = [];
-                $scope.isLabelsVisible = false;
-            }
+                        $scope.inputLabels.forEach(function (l) {
+                            issue.Labels.push({Name: l});
+                        });
+
+                        issues.addIssue(issue)
+                            .then(function (response) {
+                                console.log(response.data);
+                                $location.path('/projects/' + projectId);
+                                notify('You have successfully added a new issue.');
+                            }, function (error) {
+                                notify({message: 'Cannot ass issue.', classes: 'red-message'});
+                            })
+                    });
+            };
         }
     ])
     .controller('EditIssueCtrl', [
@@ -156,15 +152,15 @@ angular.module('issueTrackerSystem.issues', [])
             var issueId = $routeParams.id;
 
             issues.getIssueById(issueId)
-                .then(function(response) {
+                .then(function (response) {
                     $scope.issue = response.data;
                     $scope.issue.DueDate = "";
                     projects.getProjectById($scope.issue.Project.Id)
-                        .then(function(response) {
+                        .then(function (response) {
                             $scope.project = response.data;
                             $scope.canChangeLead = identity.getCurrentUser().userId == $scope.project.Lead.Id || identity.isAdmin();
                         });
-                }, function(error) {
+                }, function (error) {
 
                 });
 
@@ -214,17 +210,23 @@ angular.module('issueTrackerSystem.issues', [])
                 $scope.isLabelsVisible = false;
             }
 
-            $scope.editIssue = function(editted) {
-                editted.AssigneeId = $scope.users[0].Id;
-                editted.Labels = [];
-                $scope.inputLabels.forEach(function(l){
-                    editted.Labels.push({Name: l})
-                });
+            $scope.editIssue = function (editted) {
+                users.getUsersByFilter($scope.issue.AssigneeFilter)
+                    .then(function (response) {
+                        $scope.user = response.data;
+                        editted.AssigneeId = $scope.user[0].Id;
+                        editted.Labels = [];
+                        $scope.inputLabels.forEach(function (l) {
+                            editted.Labels.push({Name: l})
+                        });
 
-                issues.editIssue(editted, issueId)
-                    .then(function(response) {
-                        $location.path('/issues/' + issueId);
-                        notify('You have successfully edited the issue.');
+                        issues.editIssue(editted, issueId)
+                            .then(function (response) {
+                                $location.path('/issues/' + issueId);
+                                notify('You have successfully edited the issue.');
+                            }, function(error) {
+                                notify({message: 'Cannot edit issue.', classes: 'red-message'});
+                            })
                     })
             }
         }

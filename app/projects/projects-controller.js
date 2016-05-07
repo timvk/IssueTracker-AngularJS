@@ -41,34 +41,37 @@ angular.module('issueTrackerSystem.projects', [])
             };
 
             $scope.addProject = function (project) {
+                users.getUsersByFilter($scope.project.UsernameFilter)
+                    .then(function(response) {
+                        $scope.user = response.data;
+                        var labels = project.labels.split(',');
+                        var priorities = project.priorities.split(',');
 
-                var labels = project.labels.split(',');
-                var priorities = project.priorities.split(',');
+                        var newProject = {
+                            Name: project.Name,
+                            ProjectKey: project.ProjectKey,
+                            Description: project.Description,
+                            LeadId: $scope.user[0].Id,
+                            labels: [],
+                            priorities: []
+                        };
 
-                var newProject = {
-                    Name: project.Name,
-                    ProjectKey: project.ProjectKey,
-                    Description: project.Description,
-                    LeadId: $scope.users[0].Id,
-                    labels: [],
-                    priorities: []
-                };
+                        labels.forEach(function (l) {
+                            newProject.labels.push({Name: l.trim()})
+                        });
 
-                labels.forEach(function (l) {
-                    newProject.labels.push({Name: l.trim()})
-                });
+                        priorities.forEach(function (p) {
+                            newProject.priorities.push({Name: p.trim()})
+                        });
 
-                priorities.forEach(function (p) {
-                    newProject.priorities.push({Name: p.trim()})
-                });
-
-                projects.addProject(newProject)
-                    .then(function (response) {
-                        notify('You have successfully added a new project.');
-                        $location.path('/');
-                    }, function (error) {
-                        notify({message: 'Cannot add project.', classes: 'red-message'});
-                    })
+                        projects.addProject(newProject)
+                            .then(function (response) {
+                                notify('You have successfully added a new project.');
+                                $location.path('/');
+                            }, function (error) {
+                                notify({message: 'Cannot add project.', classes: 'red-message'});
+                            })
+                    });
             }
         }
     ])
