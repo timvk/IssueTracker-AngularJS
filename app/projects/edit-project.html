@@ -8,7 +8,7 @@
                         <label for="name" class="col-lg-3 control-label">Name</label>
                         <!--TODO: maybe use value and not placeholder-->
                         <div class="col-lg-9">
-                            <input ng-model="projectToEdit.Name" required placeholder="{{project.Name}}"
+                            <input ng-model="project.Name" required"
                                    class="form-control" id="name" type="text">
                         </div>
                     </div>
@@ -16,7 +16,7 @@
                         <label for="description" class="col-lg-3 control-label">Description</label>
 
                         <div class="col-lg-9">
-                            <textarea ng-model="projectToEdit.Description" placeholder="{{project.Description}}"
+                            <textarea ng-model="project.Description"
                                       class="form-control" rows="3" id="description"></textarea>
                         </div>
                     </div>
@@ -24,22 +24,14 @@
                         <label for="lead" class="col-lg-3 control-label">Lead</label>
 
                         <div class="col-lg-9">
-                            <input ng-change="useFilter()"
-                                   ng-model="projectToEdit.UsernameFilter"
-                                   placeholder="{{project.Lead.Username}}"
-                                   required
-                                   class="form-control" id="lead" type="text">
-
-                            <div class="custom-dropdown">
-                                <div ng-repeat="user in users | limitTo: 4">{{user.Username}}</div>
-                            </div>
+                            <input ng-model="project.Lead.Username" disabled required class="form-control" id="lead" type="text">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="labels" class="col-lg-3 control-label">Labels</label>
 
                         <div class="col-lg-9">
-                            <input ng-model="projectToEdit.labels" placeholder="{{labels}}" class="form-control"
+                            <input ng-model="project.labels" class="form-control"
                                    id="labels" type="text">
                         </div>
                     </div>
@@ -47,14 +39,14 @@
                         <label for="priorities" class="col-lg-3 control-label">Priorities</label>
 
                         <div class="col-lg-9">
-                            <input ng-model="projectToEdit.priorities" placeholder="{{priorities}}" class="form-control"
+                            <input ng-model="project.priorities" class="form-control"
                                    id="priorities" type="text">
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="col-lg-9 col-lg-offset-2">
                             <button type="reset" class="btn btn-default">Cancel</button>
-                            <button ng-click="editProject(projectToEdit, project.Id)"
+                            <button ng-click="editProject(project, project.Id)"
                                     ng-disabled="editProjectForm.$invalid" type="submit" class="btn btn-warning">Edit
                             </button>
                         </div>

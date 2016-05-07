@@ -35,14 +35,13 @@ angular.module('issueTrackerSystem.projects', [])
                     })
             };
 
-            $scope.setLead = function(leadUsername) {
+            $scope.setLead = function (leadUsername) {
                 $scope.project.UsernameFilter = leadUsername;
                 $scope.isVisible = false;
             };
 
             $scope.addProject = function (project) {
 
-                //TODO: think of a better way to do it
                 var labels = project.labels.split(',');
                 var priorities = project.priorities.split(',');
 
@@ -63,15 +62,12 @@ angular.module('issueTrackerSystem.projects', [])
                     newProject.priorities.push({Name: p.trim()})
                 });
 
-                console.log(newProject);
-
                 projects.addProject(newProject)
                     .then(function (response) {
-                        console.log(response.data);
                         notify('You have successfully added a new project.');
                         $location.path('/');
                     }, function (error) {
-                        console.log(error);
+                        notify({message: 'Cannot add project.', classes: 'red-message'});
                     })
             }
         }
@@ -89,7 +85,6 @@ angular.module('issueTrackerSystem.projects', [])
                 .then(function (response) {
                     $scope.project = response.data;
                     $scope.checkLeader = checkLeader;
-                    console.log($scope.project);
                     issues.getIssuesByFilter('Project.Name', $scope.project.Name)
                         .then(function (response) {
                             $scope.issues = response.data.Issues;
@@ -109,7 +104,6 @@ angular.module('issueTrackerSystem.projects', [])
                 issues.getIssuesByFilter('Project.Name', $scope.project.Name, null, $scope.pagination.currentPage)
                     .then(function (response) {
                         $scope.issues = response.data.Issues;
-                        console.log(response.data);
                     })
             };
 
@@ -128,7 +122,6 @@ angular.module('issueTrackerSystem.projects', [])
                 projects.getAllProjects(null, $scope.pagination.currentPage)
                     .then(function (response) {
                         $scope.projects = response.data.Projects;
-                        console.log(response.data);
                     })
             };
 
@@ -157,27 +150,21 @@ angular.module('issueTrackerSystem.projects', [])
         function EditProjectCtrl($scope, $routeParams, $location, projects, users, identity, notify) {
             var projectId = $routeParams.id;
 
-            $scope.useFilter = function () {
-                users.getUsersByFilter($scope.projectToEdit.UsernameFilter)
-                    .then(function (response) {
-                        $scope.users = response.data;
-                    })
-            };
-
             projects.getProjectById(projectId)
                 .then(function (response) {
-                    $scope.labels = "";
-                    $scope.priorities = "";
+                    var labels = "";
+                    var priorities = "";
 
                     response.data.Labels.forEach(function (l) {
-                        $scope.labels = $scope.labels + l.Name + ', '
+                        labels = labels + l.Name + ', '
                     });
-
                     response.data.Priorities.forEach(function (p) {
-                        $scope.priorities = $scope.priorities + p.Name + ', '
+                        priorities = priorities + p.Name + ', '
                     });
 
                     $scope.project = response.data;
+                    $scope.project.labels = labels;
+                    $scope.project.priorities = priorities;
                 });
 
             $scope.editProject = function (project, projectId) {
@@ -189,7 +176,7 @@ angular.module('issueTrackerSystem.projects', [])
                 var editProject = {
                     Name: project.Name,
                     Description: project.Description,
-                    LeadId: $scope.users[0].Id,
+                    LeadId: $scope.project.Lead.Id,
                     labels: [],
                     priorities: []
                 };
@@ -208,7 +195,7 @@ angular.module('issueTrackerSystem.projects', [])
                         notify('Project successfully edited.');
                         $location.path('/');
                     }, function (error) {
-
+                        notify({message: 'Cannot edit project.', classes: 'red-message'});
                     })
             };
 

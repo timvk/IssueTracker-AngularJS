@@ -38,7 +38,7 @@ angular.module('issueTrackerSystem.home', [])
                                 location.reload();
                             });
                     }, function (error) {
-                        console.log(error);
+                        notify({message: 'Invalid credentials.', classes: 'red-message'});
                     })
             };
 
@@ -46,14 +46,13 @@ angular.module('issueTrackerSystem.home', [])
                 userAuthentication.registerUser(user)
                     .then(function (response) {
                         notify('You have successfully registered.');
-                        console.log(response);
                         $scope.login(user);
                     }, function (error) {
-                        console.log(error);
+                        notify({message: 'Invalid credentials.', classes: 'red-message'});
                     })
             };
 
-            $scope.pageChanged = function() {
+            $scope.pageChanged = function () {
                 issues.getIssuesByUser(null, $scope.pagination.currentPage)
                     .then(function (response) {
                         $scope.issues = response.data.Issues;
@@ -79,7 +78,6 @@ angular.module('issueTrackerSystem.home', [])
                                 $scope.projects = projects.getAffiliatedProjects(projectsLead, projectIssues);
 
                             }, function (error) {
-                                console.log(error);
                             })
                     }, function (error) {
                         console.log(error);
@@ -89,7 +87,6 @@ angular.module('issueTrackerSystem.home', [])
             function getUsersIssues() {
                 issues.getIssuesByUser()
                     .then(function (response) {
-                        console.log(response.data);
                         $scope.issues = response.data.Issues;
                         $scope.totalCount = response.data.TotalCount;
                         $scope.totalPages = response.data.TotalPages;

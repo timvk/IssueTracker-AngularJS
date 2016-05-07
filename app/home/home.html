@@ -120,7 +120,7 @@
                 <td><a href="#/issues/{{issue.Id}}">{{issue.Title}}</a></td>
                 <td>{{issue.Description}}</td>
                 <td>{{issue.Project.Name}}</td>
-                <td>{{issue.DueDate}}</td>
+                <td>{{issue.DueDate | date: medium}}</td>
                 <td>{{issue.Author.Username}}</td>
             </tr>
             </tbody>

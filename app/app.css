@@ -113,3 +113,8 @@ h4 {
 .uib-left, .uib-right {
     width: 100%
 }
+
+.red-message {
+    background: coral;
+    color: #000000;
+}

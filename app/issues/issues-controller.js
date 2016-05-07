@@ -25,7 +25,6 @@ angular.module('issueTrackerSystem.issues', [])
 
             issues.getIssueById($routeParams.issueId)
                 .then(function (response) {
-                    console.log(response.data);
                     $scope.issue = response.data;
                     $scope.checkIfAuthorized = checkIfAssignee();
 
@@ -34,9 +33,8 @@ angular.module('issueTrackerSystem.issues', [])
                         .then(function (response) {
                             $scope.LeaderId = response.data.Lead.Id;
                             $scope.checkLeader = $scope.LeaderId ==
-                            identity.getCurrentUser().userId ||
-                            $scope.issue.Assignee.Id == identity.getCurrentUser().userId ||
-                            identity.isAdmin();
+                            identity.getCurrentUser().userId || identity.isAdmin();
+                            //$scope.issue.Assignee.Id == identity.getCurrentUser().userId ||
                         });
 
                 }, function (error) {
@@ -44,16 +42,15 @@ angular.module('issueTrackerSystem.issues', [])
                 });
 
             function checkIfAssignee() {
-                //TODO: test this
-                return $scope.issue.Assignee.Id == identity.getCurrentUser().userId || identity.isAdmin()
+                return $scope.issue.Assignee.Id == identity.getCurrentUser().userId || identity.isAdmin();
             }
 
             $scope.changeStatus = function (issueId, statusId) {
                 issues.changeStatus(issueId, statusId, $scope.issue)
                     .then(function (response) {
-                        console.log(response.data);
                         $location.path('/issues/' + issueId);
-                    })
+                        notify('You have successfully changed the status.');
+                    });
             }
         }
     ])
@@ -88,7 +85,7 @@ angular.module('issueTrackerSystem.issues', [])
                 $scope.isVisible = false;
             };
 
-            var labelsArr = [];
+            $scope.labelsArr = [];
 
             $scope.useLabelFilter = function () {
                 if ($scope.issue.labelFilter) {
@@ -101,17 +98,17 @@ angular.module('issueTrackerSystem.issues', [])
                             $scope.isLabelsVisible = true;
 
                             if (!$scope.issue.labelFilter) {
-                                clearLabels(labelsArr);
+                                clearLabels($scope.labelsArr);
                             }
                         })
                 } else {
-                    clearLabels(labelsArr);
+                    clearLabels($scope.labelsArr);
                 }
             };
 
             $scope.setLabels = function (label) {
-                labelsArr.push(label);
-                $scope.issue.labelFilter = labelsArr.join(', ');
+                $scope.labelsArr.push(label);
+                $scope.issue.labelFilter = $scope.labelsArr.join(', ');
                 $scope.isLabelsVisible = false;
             };
 
@@ -130,12 +127,12 @@ angular.module('issueTrackerSystem.issues', [])
                     newIssue.Labels.push({Name: l});
                 });
 
-                console.log(newIssue);
-
                 issues.addIssue(newIssue)
                     .then(function (response) {
                         $location.path('/projects/' + projectId);
                         notify('You have successfully added a new issue.');
+                    }, function(error) {
+                        notify({message: 'Cannot ass issue.', classes: 'red-message'});
                     })
             };
 
@@ -165,7 +162,7 @@ angular.module('issueTrackerSystem.issues', [])
                     projects.getProjectById($scope.issue.Project.Id)
                         .then(function(response) {
                             $scope.project = response.data;
-                            //$scope.canChangeLead =
+                            $scope.canChangeLead = identity.getCurrentUser().userId == $scope.project.Lead.Id || identity.isAdmin();
                         });
                 }, function(error) {
 
@@ -218,16 +215,14 @@ angular.module('issueTrackerSystem.issues', [])
             }
 
             $scope.editIssue = function(editted) {
-                editted.AssigneeId = $scope.issue.Assignee.Id;
+                editted.AssigneeId = $scope.users[0].Id;
                 editted.Labels = [];
                 $scope.inputLabels.forEach(function(l){
                     editted.Labels.push({Name: l})
                 });
 
-                //console.log(editted);
                 issues.editIssue(editted, issueId)
                     .then(function(response) {
-                        console.log(response.data);
                         $location.path('/issues/' + issueId);
                         notify('You have successfully edited the issue.');
                     })
