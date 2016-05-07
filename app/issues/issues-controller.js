@@ -1,4 +1,6 @@
-angular.module('issueTrackerSystem.issues', [])
+angular.module('issueTrackerSystem.issues', [
+    'issueTrackerSystem.services.comments'
+])
     .config(['$routeProvider', function ($routeProvider) {
         $routeProvider
             .when('/issues/:issueId', {
@@ -66,12 +68,13 @@ angular.module('issueTrackerSystem.issues', [])
         'projects',
         '$location',
         '$route',
-        function IssuePageCtrl($scope, $routeParams, issues, identity, projects, $location, $route) {
+        'comments',
+        'notify',
+        function IssuePageCtrl($scope, $routeParams, issues, identity, projects, $location, $route, comments, notify) {
 
             issues.getIssueById($routeParams.issueId)
                 .then(function (response) {
                     $scope.issue = response.data;
-                    $scope.checkIfAuthorized = checkIfAssignee();
 
                     var projectId = $scope.issue.Project.Id;
                     projects.getProjectById(projectId)
@@ -80,6 +83,7 @@ angular.module('issueTrackerSystem.issues', [])
                             $scope.checkLeader = $scope.LeaderId ==
                             identity.getCurrentUser().userId || identity.isAdmin();
                             //$scope.issue.Assignee.Id == identity.getCurrentUser().userId ||
+                            $scope.checkIfAuthorized = checkIfAssignee();
                         });
 
                 }, function (error) {
@@ -87,7 +91,8 @@ angular.module('issueTrackerSystem.issues', [])
                 });
 
             function checkIfAssignee() {
-                return $scope.issue.Assignee.Id == identity.getCurrentUser().userId || identity.isAdmin();
+                return $scope.issue.Assignee.Id == identity.getCurrentUser().userId || identity.isAdmin() || $scope.LeaderId ==
+                    identity.getCurrentUser().userId;
             }
 
             $scope.changeStatus = function (issueId, statusId) {
@@ -97,6 +102,20 @@ angular.module('issueTrackerSystem.issues', [])
                         $route.reload();
                         notify('You have successfully changed the status.');
                     });
+            };
+
+            comments.getCommentsForIssue($routeParams.issueId)
+                .then(function(response) {
+                    $scope.comments = response.data;
+                });
+
+            $scope.addComment = function(comment){
+                comments.addCommentToIssue(comment, $routeParams.issueId)
+                    .then(function(response) {
+                        console.log(response.data);
+                        $route.reload();
+                        notify('You have successfully added a comment.');
+                    })
             }
         }
     ])
