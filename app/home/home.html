@@ -1,4 +1,4 @@
-<div ng-if="!isAuthenticated">
+<div ng-if="!identity.isAuthenticated()">
     <div class="col-md-5 col-md-offset-1">
         <div class="well bs-component">
             <form name="loginForm" class="form-horizontal">
@@ -86,7 +86,7 @@
     </div>
 </div>
 
-<div ng-if="isAuthenticated">
+<div ng-if="identity.isAuthenticated()">
     <div class="bs-component col-md-3">
         <h3>My Projects</h3>
         <table class="pattern-style-a col-md-12">

@@ -10,9 +10,9 @@ angular.module('issueTrackerSystem.common.main', [
         'notify',
         function MainCtrl($scope, userAuthentication, identity, $location, notify) {
 
-            $scope.isAuthenticated = identity.isAuthenticated();
+            $scope.identity = identity;
 
-            if($scope.isAuthenticated) {
+            if($scope.identity.isAuthenticated()) {
                 $scope.currentUser = identity.getCurrentUser();
                 $scope.isAdmin = $scope.currentUser.isAdmin;
             }

@@ -19,14 +19,13 @@ angular.module('issueTrackerSystem.home', [])
         '$route',
         function HomeCtrl($scope, $location, userAuthentication, identity, projects, issues, notify, $route) {
             $scope.isAuthenticated = identity.isAuthenticated();
+            $scope.identity = identity;
 
             $scope.login = function (user) {
                 userAuthentication.loginUser(user)
                     .then(function (loggedData) {
                         notify('You have successfully logged in.');
                         sessionStorage.accessToken = loggedData.data.access_token;
-                        $scope.isAuthenticated = true;
-                        $location.path('/');
 
                         userAuthentication.getCurrentUser()
                             .then(function (response) {
@@ -36,7 +35,9 @@ angular.module('issueTrackerSystem.home', [])
                                     isAdmin: response.data.isAdmin
                                 };
                                 sessionStorage.currentUser = JSON.stringify(currentUser);
-                                $route.reload();
+                                $location.path('/');
+                                //$route.reload();
+                                location.reload();
                             });
                     }, function (error) {
                         notify({message: 'Invalid credentials.', classes: 'red-message'});
@@ -60,7 +61,7 @@ angular.module('issueTrackerSystem.home', [])
                     });
             };
 
-            if ($scope.isAuthenticated) {
+            if ($scope.identity.isAuthenticated()) {
                 getUsersProjects();
                 getUsersIssues();
             }
